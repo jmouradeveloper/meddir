@@ -1,0 +1,32 @@
+# Dockerfile para desenvolvimento - Rails 8.1 com Ruby 4.0
+FROM ruby:4.0.0
+
+# Instalar dependências do sistema
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    libsqlite3-dev \
+    sqlite3 \
+    libyaml-dev \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar Node.js 22 LTS
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Instalar Rails 8.1
+RUN gem install rails -v '~> 8.1'
+
+# Expor porta do servidor Rails
+EXPOSE 3000
+
+# Comando padrão
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+
