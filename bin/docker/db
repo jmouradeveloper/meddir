@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Database management commands
+set -e
+
+cd "$(dirname "$0")/../.."
+
+case "${1:-}" in
+  console|dbconsole)
+    docker compose exec web bin/rails dbconsole
+    ;;
+  migrate)
+    shift
+    docker compose exec web bin/rails db:migrate "$@"
+    ;;
+  rollback)
+    shift
+    docker compose exec web bin/rails db:rollback "$@"
+    ;;
+  seed)
+    docker compose exec web bin/rails db:seed
+    ;;
+  reset)
+    docker compose exec web bin/rails db:reset
+    ;;
+  prepare)
+    docker compose exec web bin/rails db:prepare
+    ;;
+  status)
+    docker compose exec web bin/rails db:migrate:status
+    ;;
+  *)
+    echo "Usage: bin/docker/db <command>"
+    echo ""
+    echo "Commands:"
+    echo "  console   - Open database console"
+    echo "  migrate   - Run pending migrations"
+    echo "  rollback  - Rollback last migration"
+    echo "  seed      - Run database seeds"
+    echo "  reset     - Drop, create, migrate and seed"
+    echo "  prepare   - Create and migrate (or just migrate if exists)"
+    echo "  status    - Show migration status"
+    ;;
+esac
+

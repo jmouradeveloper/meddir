@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Run Rails generators
+set -e
+
+cd "$(dirname "$0")/../.."
+
+docker compose exec web bin/rails generate "$@"
+

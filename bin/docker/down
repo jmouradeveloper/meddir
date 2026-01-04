@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Stop the development environment
+set -e
+
+cd "$(dirname "$0")/../.."
+
+echo "Stopping development environment..."
+docker compose down "$@"
+

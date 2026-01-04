@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# View container logs
+set -e
+
+cd "$(dirname "$0")/../.."
+
+docker compose logs "$@"
+

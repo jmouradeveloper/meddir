@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Open Rails console in the container
+set -e
+
+cd "$(dirname "$0")/../.."
+
+docker compose exec web bin/rails console "$@"
+

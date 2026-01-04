@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Open a bash shell in the container
+set -e
+
+cd "$(dirname "$0")/../.."
+
+docker compose exec web bash "$@"
+

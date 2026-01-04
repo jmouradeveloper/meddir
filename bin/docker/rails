@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Run rails commands in the container
+set -e
+
+cd "$(dirname "$0")/../.."
+
+docker compose exec web bin/rails "$@"
+

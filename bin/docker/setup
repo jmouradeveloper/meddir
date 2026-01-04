@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Set up the development environment from scratch
+set -e
+
+cd "$(dirname "$0")/../.."
+
+echo "==> Building Docker image..."
+docker compose build
+
+echo "==> Starting containers..."
+docker compose up -d
+
+echo "==> Waiting for container to be ready..."
+sleep 3
+
+echo "==> Setting up database..."
+docker compose exec web bin/rails db:prepare
+
+echo "==> Setup complete!"
+echo "    Run 'bin/docker/logs -f' to view logs"
+echo "    Run 'bin/docker/console' for Rails console"
+

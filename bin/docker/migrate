@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Run database migrations
+set -e
+
+cd "$(dirname "$0")/../.."
+
+docker compose exec web bin/rails db:migrate "$@"
+

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Start the development environment
+set -e
+
+cd "$(dirname "$0")/../.."
+
+echo "Starting development environment..."
+docker compose up "$@"
+
