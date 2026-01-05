@@ -2,6 +2,10 @@ class DocumentsController < ApplicationController
   before_action :set_medical_folder
   before_action :set_document, only: %i[show edit update destroy]
 
+  def index
+    @documents = @medical_folder.documents.recent.with_attached_file
+  end
+
   def show
   end
 
