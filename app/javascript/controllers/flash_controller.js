@@ -7,25 +7,17 @@ export default class extends Controller {
 
   connect() {
     if (this.dismissAfterValue > 0) {
-      this.timeout = setTimeout(() => {
+      setTimeout(() => {
         this.dismiss()
       }, this.dismissAfterValue)
     }
   }
 
-  disconnect() {
-    if (this.timeout) {
-      clearTimeout(this.timeout)
-    }
-  }
-
   dismiss() {
-    this.element.classList.add('opacity-0', 'transform', 'translate-x-full')
-    this.element.style.transition = 'all 0.3s ease-out'
+    this.element.classList.add("opacity-0", "translate-x-4", "transition-all", "duration-300")
     
     setTimeout(() => {
       this.element.remove()
     }, 300)
   }
 }
-

@@ -1,0 +1,137 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800">
+  <!-- Header -->
+  <header class="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span class="text-lg font-bold text-white tracking-tight">MedDir</span>
+        </div>
+
+        <div class="flex items-center gap-2 text-sm">
+          <span class="text-slate-400">Shared by</span>
+          <span class="text-white font-medium"><%= @owner.display_name %></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Shared Folder Notice -->
+    <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 mb-8">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+        </svg>
+        <div>
+          <p class="text-emerald-300 font-medium">You're viewing a shared medical folder</p>
+          <p class="text-emerald-400/70 text-sm"><%= @shareable_link.formatted_expiration %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Folder Header -->
+    <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 mb-8">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-<%= @medical_folder.specialty_color %>-500/20 to-<%= @medical_folder.specialty_color %>-600/20 flex items-center justify-center">
+          <svg class="w-7 h-7 text-<%= @medical_folder.specialty_color %>-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-white"><%= @medical_folder.name %></h1>
+          <p class="text-slate-400"><%= @medical_folder.specialty_name %> &bull; <%= @documents.count %> document<%= @documents.count == 1 ? '' : 's' %></p>
+        </div>
+      </div>
+
+      <% if @medical_folder.description.present? %>
+        <p class="mt-4 text-slate-400"><%= @medical_folder.description %></p>
+      <% end %>
+    </div>
+
+    <!-- Documents List -->
+    <h2 class="text-xl font-bold text-white mb-6">Documents</h2>
+
+    <% if @documents.any? %>
+      <div class="space-y-3">
+        <% @documents.each do |document| %>
+          <div class="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-lg bg-slate-700/50 flex items-center justify-center flex-shrink-0">
+                  <% if document.file_type == :pdf %>
+                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  <% else %>
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  <% end %>
+                </div>
+                <div>
+                  <h3 class="text-white font-medium"><%= document.title %></h3>
+                  <div class="flex items-center gap-3 text-sm text-slate-500">
+                    <span><%= document.formatted_date %></span>
+                    <% if document.file.attached? %>
+                      <span>&bull;</span>
+                      <span><%= document.file_size_mb %> MB</span>
+                    <% end %>
+                  </div>
+                  <% if document.notes.present? %>
+                    <p class="mt-2 text-sm text-slate-400"><%= document.notes %></p>
+                  <% end %>
+                </div>
+              </div>
+
+              <% if document.file.attached? %>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                  <% if document.file_type == :image %>
+                    <%= link_to url_for(document.file), target: "_blank", class: "flex items-center gap-2 px-3 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-sm transition-all" do %>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                      View
+                    <% end %>
+                  <% end %>
+
+                  <%= link_to rails_blob_path(document.file, disposition: "attachment"), class: "flex items-center gap-2 px-3 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg text-sm transition-all" do %>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-12 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">No documents in this folder</h3>
+        <p class="text-slate-400">The folder owner hasn't uploaded any documents yet.</p>
+      </div>
+    <% end %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-slate-800 mt-12">
+    <div class="max-w-5xl mx-auto text-center">
+      <p class="text-slate-500 text-sm">
+        Shared via MedDir &bull; Secure medical document sharing
+      </p>
+    </div>
+  </footer>
+</div>
+
