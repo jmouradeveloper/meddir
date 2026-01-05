@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   # Dashboard (authenticated home)
-  resource :dashboard, only: :show
+  resource :dashboard, only: :show, controller: "dashboards"
 
   # Medical Folders
   resources :medical_folders do

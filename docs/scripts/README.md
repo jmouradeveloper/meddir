@@ -21,7 +21,7 @@ All development is done via Docker Compose. The scripts in `bin/docker/` provide
 | Run migrations | `bin/docker/migrate` |
 | Generate model | `bin/docker/generate model Name` |
 | View logs | `bin/docker/logs -f` |
-| Shell access | `bin/docker/bash` |
+| Shell access | `bin/docker/bash` |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 | Lint code | `bin/docker/lint` |
 | Full setup | `bin/docker/setup` |
 

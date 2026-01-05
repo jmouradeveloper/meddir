@@ -1,0 +1,50 @@
+<%= form_with model: medical_folder, class: "space-y-6" do |form| %>
+  <% if medical_folder.errors.any? %>
+    <div class="bg-red-500/10 border border-red-500/50 rounded-xl p-4">
+      <div class="flex items-center gap-2 text-red-400 mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="font-medium">Please fix the following errors:</span>
+      </div>
+      <ul class="list-disc list-inside text-red-300 text-sm space-y-1">
+        <% medical_folder.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, class: "block text-sm font-medium text-slate-300 mb-2" %>
+    <%= form.text_field :name, 
+        autofocus: true,
+        placeholder: "e.g., Annual Checkups, Lab Results 2024",
+        class: "w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all" %>
+  </div>
+
+  <div>
+    <%= form.label :specialty, "Medical Specialty", class: "block text-sm font-medium text-slate-300 mb-2" %>
+    <%= form.select :specialty,
+        MedicalFolder::SPECIALTIES.map { |key, value| [value[:name], key] },
+        { include_blank: "Select a specialty..." },
+        class: "w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all" %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Description (optional)", class: "block text-sm font-medium text-slate-300 mb-2" %>
+    <%= form.text_area :description,
+        rows: 3,
+        placeholder: "Add notes about this folder...",
+        class: "w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none" %>
+  </div>
+
+  <div class="flex items-center gap-4 pt-4">
+    <%= form.submit medical_folder.new_record? ? "Create Folder" : "Update Folder",
+        class: "px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/30 transform hover:scale-[1.02] transition-all cursor-pointer" %>
+    
+    <%= link_to "Cancel", medical_folder.new_record? ? dashboard_path : medical_folder_path(medical_folder),
+        class: "px-6 py-3 text-slate-400 hover:text-white font-medium transition-colors" %>
+  </div>
+<% end %>
+
