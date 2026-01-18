@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* Fullscreen preview styles */
+.is-fullscreen {
+  @apply bg-slate-900 flex items-center justify-center p-8;
+}
+
+.is-fullscreen img {
+  @apply max-h-screen object-contain;
+}
+
+.is-fullscreen .aspect-\[3\/4\] {
+  aspect-ratio: auto;
+  height: 100%;
+}

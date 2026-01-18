@@ -76,17 +76,31 @@
 
     <!-- Document Preview -->
     <% if @document.file.attached? %>
-      <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-700/50">
+      <div data-controller="fullscreen" class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-700/50 flex items-center justify-between">
           <h2 class="text-lg font-semibold text-white">Preview</h2>
+          <% if @document.file_type == :image || @document.file_type == :pdf %>
+            <button data-action="fullscreen#toggle" 
+                    class="flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all text-sm"
+                    title="Toggle fullscreen">
+              <svg data-fullscreen-target="expandIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+              </svg>
+              <svg data-fullscreen-target="compressIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
+              </svg>
+              <span data-fullscreen-target="expandIcon">Fullscreen</span>
+              <span data-fullscreen-target="compressIcon" class="hidden">Exit</span>
+            </button>
+          <% end %>
         </div>
-        <div class="p-6">
+        <div data-fullscreen-target="container" class="p-6 bg-slate-800/50">
           <% if @document.file_type == :image %>
             <div class="flex justify-center">
               <%= image_tag url_for(@document.file), class: "max-w-full h-auto rounded-lg shadow-lg", alt: @document.title %>
             </div>
           <% elsif @document.file_type == :pdf %>
-            <div class="aspect-[3/4] w-full">
+            <div class="aspect-[3/4] w-full h-full">
               <iframe src="<%= url_for(@document.file) %>" class="w-full h-full rounded-lg" title="<%= @document.title %>"></iframe>
             </div>
           <% else %>
