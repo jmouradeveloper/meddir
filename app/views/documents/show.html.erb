@@ -1,159 +1,51 @@
 <%= render "shared/authenticated_layout" do %>
-  <div class="mb-6">
-    <%= link_to medical_folder_path(@medical_folder), class: "inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors" do %>
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Back to <%= @medical_folder.name %>
-    <% end %>
-  </div>
+  <%= render Ui::BackLinkComponent.new(href: medical_folder_path(@medical_folder), text: "Back to #{@medical_folder.name}") %>
 
   <div class="max-w-4xl mx-auto">
     <!-- Document Header -->
-    <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 mb-6">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-xl bg-slate-700/50 flex items-center justify-center">
-            <% if @document.file_type == :pdf %>
-              <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-            <% else %>
-              <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            <% end %>
-          </div>
-          <div>
-            <h1 class="text-2xl font-bold text-white"><%= @document.title %></h1>
-            <div class="flex items-center gap-3 text-sm text-slate-400">
-              <span><%= @document.formatted_date %></span>
-              <% if @document.file.attached? %>
-                <span>&bull;</span>
-                <span><%= @document.file_size_mb %> MB</span>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <% if @document.file.attached? %>
-            <%= link_to rails_blob_path(@document.file, disposition: "attachment"), 
-                class: "flex items-center gap-2 px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 rounded-xl transition-all" do %>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Download
-            <% end %>
+    <%= render Features::PageHeaderComponent.new(
+      title: @document.title,
+      subtitle: "#{@document.formatted_date}#{@document.file.attached? ? " • #{@document.file_size_mb} MB" : ""}",
+      icon: @document.file_type == :pdf ? :document_pdf : :image,
+      icon_color: @document.file_type == :pdf ? "red" : "blue"
+    ) do |header| %>
+      <% header.with_actions do %>
+        <% if @document.file.attached? %>
+          <%= render Ui::ButtonComponent.new(
+            href: rails_blob_path(@document.file, disposition: "attachment"),
+            variant: :primary,
+            icon: :download
+          ) do %>
+            Download
           <% end %>
+        <% end %>
 
-          <%= link_to edit_medical_folder_document_path(@medical_folder, @document), class: "flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition-all" do %>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-            Edit
-          <% end %>
+        <%= render Ui::ButtonComponent.new(
+          href: edit_medical_folder_document_path(@medical_folder, @document),
+          variant: :secondary,
+          icon: :edit
+        ) do %>
+          Edit
+        <% end %>
 
-          <%= button_to medical_folder_document_path(@medical_folder, @document), 
-              method: :delete, 
-              data: { turbo_confirm: "Are you sure you want to delete this document?" },
-              class: "flex items-center gap-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/30 rounded-xl transition-all" do %>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            Delete
-          <% end %>
-        </div>
-      </div>
+        <%= render Ui::ButtonComponent.new(
+          href: medical_folder_document_path(@medical_folder, @document),
+          variant: :danger,
+          method: :delete,
+          turbo_confirm: "Are you sure you want to delete this document?",
+          icon: :trash
+        ) do %>
+          Delete
+        <% end %>
+      <% end %>
 
       <% if @document.notes.present? %>
-        <div class="mt-4 pt-4 border-t border-slate-700/50">
-          <h3 class="text-sm font-medium text-slate-400 mb-2">Notes</h3>
-          <p class="text-white"><%= @document.notes %></p>
-        </div>
+        <h3 class="text-sm font-medium text-slate-400 mb-2">Notes</h3>
+        <p class="text-white"><%= @document.notes %></p>
       <% end %>
-    </div>
+    <% end %>
 
     <!-- Document Preview -->
-    <% if @document.file.attached? %>
-      <div data-controller="fullscreen">
-        <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
-          <div class="px-6 py-4 border-b border-slate-700/50 flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-white">Preview</h2>
-            <% if @document.file_type == :image || @document.file_type == :pdf %>
-              <button type="button"
-                      data-action="click->fullscreen#open" 
-                      class="flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all text-sm"
-                      title="Fullscreen">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                </svg>
-                Fullscreen
-              </button>
-            <% end %>
-          </div>
-          <div class="p-6 bg-slate-800/50">
-            <% if @document.file_type == :image %>
-              <div class="flex justify-center">
-                <%= image_tag url_for(@document.file), class: "max-w-full h-auto rounded-lg shadow-lg", alt: @document.title %>
-              </div>
-            <% elsif @document.file_type == :pdf %>
-              <div class="aspect-[3/4] w-full h-full">
-                <iframe src="<%= url_for(@document.file) %>" class="w-full h-full rounded-lg" title="<%= @document.title %>"></iframe>
-              </div>
-            <% else %>
-              <div class="text-center py-12">
-                <div class="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-                  <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <p class="text-slate-400 mb-4">Preview not available for this file type</p>
-                <%= link_to rails_blob_path(@document.file, disposition: "attachment"), 
-                    class: "inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 rounded-xl transition-all" do %>
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  Download to View
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-
-        <!-- Fullscreen Modal (outside overflow-hidden container) -->
-        <% if @document.file_type == :image || @document.file_type == :pdf %>
-          <div data-fullscreen-target="modal" 
-               data-action="click->fullscreen#closeOnBackdrop"
-               class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 bg-slate-950/80 backdrop-blur-xl">
-            <div data-fullscreen-target="modalContent" 
-                 class="w-full h-full flex flex-col transition-transform duration-200 scale-95">
-              <!-- Modal Header -->
-              <div class="flex items-center justify-between px-6 py-4 bg-slate-900/80 border-b border-slate-700/50">
-                <h2 class="text-lg font-semibold text-white truncate"><%= @document.title %></h2>
-                <button type="button"
-                        data-action="click->fullscreen#close" 
-                        class="flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  Close
-                </button>
-              </div>
-              
-              <!-- Modal Content -->
-              <div class="flex-1 min-h-0 p-6 flex items-center justify-center">
-                <% if @document.file_type == :image %>
-                  <%= image_tag url_for(@document.file), class: "max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl", alt: @document.title %>
-                <% elsif @document.file_type == :pdf %>
-                  <iframe src="<%= url_for(@document.file) %>" class="w-full h-full rounded-lg shadow-2xl" title="<%= @document.title %>"></iframe>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <%= render Features::DocumentPreviewComponent.new(document: @document) %>
   </div>
 <% end %>
-
