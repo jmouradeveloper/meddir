@@ -76,51 +76,82 @@
 
     <!-- Document Preview -->
     <% if @document.file.attached? %>
-      <div data-controller="fullscreen" class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-700/50 flex items-center justify-between">
-          <h2 class="text-lg font-semibold text-white">Preview</h2>
-          <% if @document.file_type == :image || @document.file_type == :pdf %>
-            <button data-action="fullscreen#toggle" 
-                    class="flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all text-sm"
-                    title="Toggle fullscreen">
-              <svg data-fullscreen-target="expandIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-              </svg>
-              <svg data-fullscreen-target="compressIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
-              </svg>
-              <span data-fullscreen-target="expandIcon">Fullscreen</span>
-              <span data-fullscreen-target="compressIcon" class="hidden">Exit</span>
-            </button>
-          <% end %>
-        </div>
-        <div data-fullscreen-target="container" class="p-6 bg-slate-800/50">
-          <% if @document.file_type == :image %>
-            <div class="flex justify-center">
-              <%= image_tag url_for(@document.file), class: "max-w-full h-auto rounded-lg shadow-lg", alt: @document.title %>
-            </div>
-          <% elsif @document.file_type == :pdf %>
-            <div class="aspect-[3/4] w-full h-full">
-              <iframe src="<%= url_for(@document.file) %>" class="w-full h-full rounded-lg" title="<%= @document.title %>"></iframe>
-            </div>
-          <% else %>
-            <div class="text-center py-12">
-              <div class="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <p class="text-slate-400 mb-4">Preview not available for this file type</p>
-              <%= link_to rails_blob_path(@document.file, disposition: "attachment"), 
-                  class: "inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 rounded-xl transition-all" do %>
+      <div data-controller="fullscreen">
+        <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-700/50 flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-white">Preview</h2>
+            <% if @document.file_type == :image || @document.file_type == :pdf %>
+              <button type="button"
+                      data-action="click->fullscreen#open" 
+                      class="flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all text-sm"
+                      title="Fullscreen">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                 </svg>
-                Download to View
-              <% end %>
-            </div>
-          <% end %>
+                Fullscreen
+              </button>
+            <% end %>
+          </div>
+          <div class="p-6 bg-slate-800/50">
+            <% if @document.file_type == :image %>
+              <div class="flex justify-center">
+                <%= image_tag url_for(@document.file), class: "max-w-full h-auto rounded-lg shadow-lg", alt: @document.title %>
+              </div>
+            <% elsif @document.file_type == :pdf %>
+              <div class="aspect-[3/4] w-full h-full">
+                <iframe src="<%= url_for(@document.file) %>" class="w-full h-full rounded-lg" title="<%= @document.title %>"></iframe>
+              </div>
+            <% else %>
+              <div class="text-center py-12">
+                <div class="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
+                  <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <p class="text-slate-400 mb-4">Preview not available for this file type</p>
+                <%= link_to rails_blob_path(@document.file, disposition: "attachment"), 
+                    class: "inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 rounded-xl transition-all" do %>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Download to View
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
+
+        <!-- Fullscreen Modal (outside overflow-hidden container) -->
+        <% if @document.file_type == :image || @document.file_type == :pdf %>
+          <div data-fullscreen-target="modal" 
+               data-action="click->fullscreen#closeOnBackdrop"
+               class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 bg-slate-950/80 backdrop-blur-xl">
+            <div data-fullscreen-target="modalContent" 
+                 class="w-full h-full flex flex-col transition-transform duration-200 scale-95">
+              <!-- Modal Header -->
+              <div class="flex items-center justify-between px-6 py-4 bg-slate-900/80 border-b border-slate-700/50">
+                <h2 class="text-lg font-semibold text-white truncate"><%= @document.title %></h2>
+                <button type="button"
+                        data-action="click->fullscreen#close" 
+                        class="flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Close
+                </button>
+              </div>
+              
+              <!-- Modal Content -->
+              <div class="flex-1 min-h-0 p-6 flex items-center justify-center">
+                <% if @document.file_type == :image %>
+                  <%= image_tag url_for(@document.file), class: "max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl", alt: @document.title %>
+                <% elsif @document.file_type == :pdf %>
+                  <iframe src="<%= url_for(@document.file) %>" class="w-full h-full rounded-lg shadow-2xl" title="<%= @document.title %>"></iframe>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>

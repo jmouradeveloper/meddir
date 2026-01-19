@@ -1,35 +1,61 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "expandIcon", "compressIcon"]
+  static targets = ["modal", "modalContent"]
 
   connect() {
-    this.boundHandleFullscreenChange = this.handleFullscreenChange.bind(this)
-    document.addEventListener("fullscreenchange", this.boundHandleFullscreenChange)
+    this.boundHandleKeydown = this.handleKeydown.bind(this)
+    console.log("Fullscreen controller connected", this.hasModalTarget)
   }
 
   disconnect() {
-    document.removeEventListener("fullscreenchange", this.boundHandleFullscreenChange)
+    document.removeEventListener("keydown", this.boundHandleKeydown)
+    document.body.classList.remove("overflow-hidden")
   }
 
-  toggle() {
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    } else {
-      this.containerTarget.requestFullscreen()
+  open() {
+    console.log("Opening fullscreen modal")
+    if (!this.hasModalTarget) {
+      console.error("Modal target not found")
+      return
+    }
+    
+    this.modalTarget.classList.remove("hidden")
+    document.body.classList.add("overflow-hidden")
+    document.addEventListener("keydown", this.boundHandleKeydown)
+    
+    // Animate in (use setTimeout to ensure the hidden class is removed first)
+    setTimeout(() => {
+      this.modalTarget.classList.remove("opacity-0")
+      this.modalTarget.classList.add("opacity-100")
+      this.modalContentTarget.classList.remove("scale-95")
+      this.modalContentTarget.classList.add("scale-100")
+    }, 10)
+  }
+
+  close() {
+    console.log("Closing fullscreen modal")
+    this.modalTarget.classList.remove("opacity-100")
+    this.modalTarget.classList.add("opacity-0")
+    this.modalContentTarget.classList.remove("scale-100")
+    this.modalContentTarget.classList.add("scale-95")
+    
+    setTimeout(() => {
+      this.modalTarget.classList.add("hidden")
+      document.body.classList.remove("overflow-hidden")
+      document.removeEventListener("keydown", this.boundHandleKeydown)
+    }, 200)
+  }
+
+  handleKeydown(event) {
+    if (event.key === "Escape") {
+      this.close()
     }
   }
 
-  handleFullscreenChange() {
-    const isFullscreen = !!document.fullscreenElement
-
-    if (this.hasExpandIconTarget && this.hasCompressIconTarget) {
-      this.expandIconTargets.forEach(el => el.classList.toggle("hidden", isFullscreen))
-      this.compressIconTargets.forEach(el => el.classList.toggle("hidden", !isFullscreen))
-    }
-
-    if (this.hasContainerTarget) {
-      this.containerTarget.classList.toggle("is-fullscreen", isFullscreen)
+  closeOnBackdrop(event) {
+    if (event.target === this.modalTarget) {
+      this.close()
     }
   }
 }
