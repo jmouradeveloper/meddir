@@ -1,60 +1,24 @@
 <%= render "shared/authenticated_layout" do %>
-  <div class="flex items-center justify-between mb-8">
-    <div>
-      <h1 class="text-2xl font-bold text-white">All Medical Folders</h1>
-      <p class="text-slate-400 mt-1">View and manage all your medical folders</p>
-    </div>
-    <%= link_to new_medical_folder_path, class: "flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/20 transform hover:scale-105 transition-all" do %>
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      New Folder
-    <% end %>
-  </div>
+  <%= render Ui::ListPageHeaderComponent.new(
+    title: "All Medical Folders",
+    subtitle: "View and manage all your medical folders",
+    action_text: "New Folder",
+    action_href: new_medical_folder_path
+  ) %>
 
   <% if @medical_folders.any? %>
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <% @medical_folders.each do |folder| %>
-        <%= link_to medical_folder_path(folder), class: "group block bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 hover:border-emerald-500/50 rounded-2xl p-5 transition-all duration-300" do %>
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-<%= folder.specialty_color %>-500/20 to-<%= folder.specialty_color %>-600/20 flex items-center justify-center group-hover:from-<%= folder.specialty_color %>-500/30 group-hover:to-<%= folder.specialty_color %>-600/30 transition-all flex-shrink-0">
-              <svg class="w-6 h-6 text-<%= folder.specialty_color %>-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-              </svg>
-            </div>
-            <div class="min-w-0 flex-1">
-              <h3 class="text-lg font-semibold text-white group-hover:text-<%= folder.specialty_color %>-400 transition-colors truncate"><%= folder.name %></h3>
-              <p class="text-sm text-slate-400"><%= folder.specialty_name %></p>
-              <div class="flex items-center gap-2 mt-2 text-slate-500">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <span class="text-sm"><%= folder.documents_count %> document<%= folder.documents_count == 1 ? '' : 's' %></span>
-              </div>
-            </div>
-          </div>
-          <% if folder.description.present? %>
-            <p class="mt-3 text-sm text-slate-500 line-clamp-2"><%= folder.description %></p>
-          <% end %>
-        <% end %>
+        <%= render Features::FolderCardComponent.new(folder: folder) %>
       <% end %>
     </div>
   <% else %>
-    <div class="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-12 text-center">
-      <div class="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-        <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-        </svg>
-      </div>
-      <h3 class="text-lg font-semibold text-white mb-2">No folders yet</h3>
-      <p class="text-slate-400 mb-6">Create your first medical folder to start organizing your documents.</p>
-      <%= link_to new_medical_folder_path, class: "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/20 transition-all" do %>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-        Create Your First Folder
-      <% end %>
-    </div>
+    <%= render Ui::EmptyStateComponent.new(
+      title: "No folders yet",
+      description: "Create your first medical folder to start organizing your documents.",
+      icon: :folder,
+      action_text: "Create Your First Folder",
+      action_href: new_medical_folder_path
+    ) %>
   <% end %>
 <% end %>
-

@@ -1,19 +1,5 @@
 <%= form_with model: medical_folder, class: "space-y-6" do |form| %>
-  <% if medical_folder.errors.any? %>
-    <div class="bg-red-500/10 border border-red-500/50 rounded-xl p-4">
-      <div class="flex items-center gap-2 text-red-400 mb-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span class="font-medium">Please fix the following errors:</span>
-      </div>
-      <ul class="list-disc list-inside text-red-300 text-sm space-y-1">
-        <% medical_folder.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render Ui::FormErrorsComponent.new(record: medical_folder) %>
 
   <div>
     <%= form.label :name, class: "block text-sm font-medium text-slate-300 mb-2" %>
@@ -47,4 +33,3 @@
         class: "px-6 py-3 text-slate-400 hover:text-white font-medium transition-colors" %>
   </div>
 <% end %>
-
