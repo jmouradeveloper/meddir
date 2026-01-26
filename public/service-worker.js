@@ -1,5 +1,5 @@
 // MedDir Service Worker - PWA with Offline Support
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const STATIC_CACHE = `meddir-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `meddir-dynamic-${CACHE_VERSION}`;
 const DOCUMENT_CACHE = `meddir-documents-${CACHE_VERSION}`;
@@ -200,19 +200,65 @@ async function networkFirst(request, cacheName) {
 
 // Network First with Offline Fallback - for navigation
 async function networkFirstWithOfflineFallback(request) {
+  const url = new URL(request.url);
+  
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       const cache = await caches.open(DYNAMIC_CACHE);
+      // Store with normalized URL to improve cache hits
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (error) {
-    const cachedResponse = await caches.match(request);
+    console.log('[SW] Network failed for navigation, checking cache:', url.pathname);
+    
+    // Try to find cached response - check multiple variations
+    let cachedResponse = await caches.match(request);
+    
+    if (!cachedResponse) {
+      // Try without query string
+      const urlWithoutQuery = new URL(url.origin + url.pathname);
+      cachedResponse = await caches.match(urlWithoutQuery.href);
+    }
+    
+    if (!cachedResponse) {
+      // Try with/without trailing slash
+      const pathname = url.pathname;
+      const altPathname = pathname.endsWith('/') 
+        ? pathname.slice(0, -1) 
+        : pathname + '/';
+      cachedResponse = await caches.match(url.origin + altPathname);
+    }
+    
+    if (!cachedResponse) {
+      // Search all caches for any matching pathname
+      const cacheNames = await caches.keys();
+      for (const cacheName of cacheNames) {
+        if (!cacheName.startsWith('meddir-')) continue;
+        const cache = await caches.open(cacheName);
+        const keys = await cache.keys();
+        for (const key of keys) {
+          const keyUrl = new URL(key.url);
+          if (keyUrl.pathname === url.pathname) {
+            cachedResponse = await cache.match(key);
+            if (cachedResponse) {
+              console.log('[SW] Found cached response in', cacheName);
+              break;
+            }
+          }
+        }
+        if (cachedResponse) break;
+      }
+    }
+    
     if (cachedResponse) {
+      console.log('[SW] Serving from cache:', url.pathname);
       return cachedResponse;
     }
-    // Return offline page
+    
+    // Return offline page as last resort
+    console.log('[SW] No cache found, showing offline page');
     const offlinePage = await caches.match('/offline.html');
     if (offlinePage) {
       return offlinePage;
