@@ -10,4 +10,3 @@ class DashboardsController < ApplicationController
                                 .includes(file_attachment: :blob)
   end
 end
-

@@ -17,7 +17,7 @@ module Features
             <h2 class="text-lg font-semibold text-white">Preview</h2>
             <% if previewable? %>
               <button type="button"
-                      data-action="click->fullscreen#open" 
+                      data-action="click->fullscreen#open"
                       class="flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all text-sm"
                       title="Fullscreen">
                 <%= render Ui::IconComponent.new(name: :expand, size: :sm) %>
@@ -25,7 +25,7 @@ module Features
               </button>
             <% end %>
           </div>
-          
+
           <div class="p-6 bg-slate-800/50">
             <%= preview_content %>
           </div>
@@ -106,7 +106,7 @@ module Features
           data: { fullscreen_target: "modalContent" },
           class: "w-full h-full flex flex-col transition-transform duration-200 scale-95"
         ) do
-          safe_join([modal_header, modal_content])
+          safe_join([ modal_header, modal_content ])
         end
       end
     end

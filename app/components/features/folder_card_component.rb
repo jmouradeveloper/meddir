@@ -8,7 +8,7 @@ module Features
 
     def call
       link_to helpers.medical_folder_path(@folder), class: link_classes do
-        safe_join([folder_header, folder_description].compact)
+        safe_join([ folder_header, folder_description ].compact)
       end
     end
 

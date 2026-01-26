@@ -28,4 +28,3 @@ class ShareableLinksController < ApplicationController
     @medical_folder = current_user.medical_folders.find(params[:medical_folder_id])
   end
 end
-

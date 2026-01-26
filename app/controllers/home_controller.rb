@@ -5,4 +5,3 @@ class HomeController < ApplicationController
     redirect_to dashboard_path if authenticated?
   end
 end
-
