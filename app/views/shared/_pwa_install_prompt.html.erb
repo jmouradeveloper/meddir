@@ -4,6 +4,42 @@
      data-pwa-install-show-delay-value="1500"
      class="hidden" 
      data-pwa-install-target="container">
+  
+  <%# Debug panel - only in development %>
+  <% if Rails.env.development? %>
+  <div data-pwa-install-target="debugPanel" class="hidden mb-3 p-3 bg-slate-800/80 border border-slate-600 rounded-xl text-xs font-mono">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-slate-300 font-semibold">PWA Debug</span>
+      <button data-action="pwa-install#hideDebug" class="text-slate-500 hover:text-slate-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="space-y-1">
+      <div class="flex justify-between">
+        <span class="text-slate-400">HTTPS:</span>
+        <span data-pwa-install-target="debugHttps" class="text-slate-300">-</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-slate-400">Service Worker:</span>
+        <span data-pwa-install-target="debugSw" class="text-slate-300">-</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-slate-400">Install Prompt:</span>
+        <span data-pwa-install-target="debugPrompt" class="text-slate-300">-</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-slate-400">Is Installed:</span>
+        <span data-pwa-install-target="debugInstalled" class="text-slate-300">-</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-slate-400">Platform:</span>
+        <span data-pwa-install-target="debugPlatform" class="text-slate-300">-</span>
+      </div>
+    </div>
+  </div>
+  <% end %>
   <div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-2xl p-4 backdrop-blur-sm animate-fade-in">
     <div class="flex items-start gap-4">
       <div class="flex-shrink-0">
@@ -24,7 +60,7 @@
         </p>
         
         <%# Android / Chrome install button %>
-        <div data-pwa-install-target="androidPrompt" class="flex items-center gap-2">
+        <div data-pwa-install-target="androidPrompt" class="flex items-center gap-2 flex-wrap">
           <button data-action="pwa-install#install"
                   data-pwa-install-target="button"
                   class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-medium rounded-lg transition-colors">
@@ -39,6 +75,13 @@
                   class="text-xs text-slate-500 hover:text-slate-400 transition-colors">
             Maybe later
           </button>
+          
+          <% if Rails.env.development? %>
+          <button data-action="pwa-install#toggleDebug"
+                  class="text-xs text-blue-400 hover:text-blue-300 transition-colors ml-auto">
+            Debug
+          </button>
+          <% end %>
         </div>
 
         <%# iOS Safari manual instructions %>

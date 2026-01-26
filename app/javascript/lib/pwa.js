@@ -87,8 +87,15 @@ class PWAManager {
 
   setupInstallPrompt() {
     let deferredPrompt = null;
+    
+    console.log('[PWA] Setting up install prompt listener...', {
+      isSecureContext: window.isSecureContext,
+      protocol: window.location.protocol,
+      hostname: window.location.hostname
+    });
 
     window.addEventListener('beforeinstallprompt', (event) => {
+      console.log('[PWA] beforeinstallprompt event received!', event);
       // Prevent the mini-infobar from appearing on mobile
       event.preventDefault();
       deferredPrompt = event;
