@@ -40,7 +40,9 @@ class Document < ApplicationRecord
   end
 
   def formatted_date
-    document_date&.strftime("%B %d, %Y") || "No date"
+    return I18n.t("common.messages.no_date") unless document_date
+
+    I18n.l(document_date, format: :long)
   end
 
   def user

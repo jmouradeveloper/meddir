@@ -1,11 +1,11 @@
 <%= render "shared/authenticated_layout" do %>
   <%= render Ui::FormPageComponent.new(
-    title: "Create New Folder",
-    subtitle: "Organize your medical documents by specialty",
+    title: t('medical_folders.new.title'),
+    subtitle: t('medical_folders.new.subtitle'),
     icon: :folder_add,
     icon_color: "emerald",
     back_href: dashboard_path,
-    back_text: "Back to Dashboard"
+    back_text: t('medical_folders.new.back_to_dashboard')
   ) do %>
     <%= render "form", medical_folder: @medical_folder %>
   <% end %>

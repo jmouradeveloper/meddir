@@ -1,0 +1,73 @@
+# English locale file for ActiveRecord models
+en:
+  activerecord:
+    models:
+      user:
+        one: "User"
+        other: "Users"
+      session:
+        one: "Session"
+        other: "Sessions"
+      medical_folder:
+        one: "Medical Folder"
+        other: "Medical Folders"
+      document:
+        one: "Document"
+        other: "Documents"
+      shareable_link:
+        one: "Share Link"
+        other: "Share Links"
+    attributes:
+      user:
+        name: "Name"
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        password_digest: "Password"
+        locale: "Language preference"
+      session:
+        user_agent: "Browser"
+        ip_address: "IP Address"
+      medical_folder:
+        name: "Name"
+        specialty: "Specialty"
+        description: "Description"
+      document:
+        title: "Title"
+        document_date: "Document date"
+        notes: "Notes"
+        file: "File"
+      shareable_link:
+        token: "Token"
+        expires_at: "Expiration date"
+        active: "Active"
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              blank: "can't be blank"
+              invalid: "is not a valid email"
+              taken: "is already registered"
+            password:
+              blank: "can't be blank"
+              too_short: "is too short (minimum is %{count} characters)"
+            name:
+              too_long: "is too long (maximum is %{count} characters)"
+        medical_folder:
+          attributes:
+            name:
+              blank: "can't be blank"
+              too_short: "is too short (minimum is %{count} characters)"
+              too_long: "is too long (maximum is %{count} characters)"
+            specialty:
+              blank: "can't be blank"
+              inclusion: "is not a valid specialty"
+        document:
+          attributes:
+            title:
+              blank: "can't be blank"
+              too_short: "is too short (minimum is %{count} characters)"
+              too_long: "is too long (maximum is %{count} characters)"
+            file:
+              blank: "must be attached"

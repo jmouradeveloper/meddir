@@ -10,16 +10,16 @@ class ShareableLinksController < ApplicationController
     )
 
     if @shareable_link.save
-      redirect_to @medical_folder, notice: "Share link created successfully."
+      redirect_to @medical_folder, notice: t("flash.shareable_links.created")
     else
-      redirect_to @medical_folder, alert: "Could not create share link."
+      redirect_to @medical_folder, alert: t("flash.shareable_links.create_error")
     end
   end
 
   def destroy
     @shareable_link = @medical_folder.shareable_links.find(params[:id])
     @shareable_link.update(active: false)
-    redirect_to @medical_folder, notice: "Share link revoked.", status: :see_other
+    redirect_to @medical_folder, notice: t("flash.shareable_links.revoked"), status: :see_other
   end
 
   private

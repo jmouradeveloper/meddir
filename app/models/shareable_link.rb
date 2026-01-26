@@ -25,12 +25,12 @@ class ShareableLink < ApplicationRecord
   end
 
   def formatted_expiration
-    return "Never expires" if expires_at.nil?
+    return I18n.t("expiration.never_expires") if expires_at.nil?
 
     if expired?
-      "Expired on #{expires_at.strftime('%B %d, %Y')}"
+      I18n.t("expiration.expired_on", date: I18n.l(expires_at, format: :long))
     else
-      "Expires on #{expires_at.strftime('%B %d, %Y at %I:%M %p')}"
+      I18n.t("expiration.expires_on", date: I18n.l(expires_at, format: :long))
     end
   end
 

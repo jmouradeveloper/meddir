@@ -1,0 +1,206 @@
+# Arquivo de locale em Português Brasileiro para o MedDir
+pt-BR:
+  # Formatos de data e hora
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d de %B de %Y"
+    day_names:
+      - domingo
+      - segunda-feira
+      - terça-feira
+      - quarta-feira
+      - quinta-feira
+      - sexta-feira
+      - sábado
+    abbr_day_names:
+      - dom
+      - seg
+      - ter
+      - qua
+      - qui
+      - sex
+      - sáb
+    month_names:
+      - ~
+      - janeiro
+      - fevereiro
+      - março
+      - abril
+      - maio
+      - junho
+      - julho
+      - agosto
+      - setembro
+      - outubro
+      - novembro
+      - dezembro
+    abbr_month_names:
+      - ~
+      - jan
+      - fev
+      - mar
+      - abr
+      - mai
+      - jun
+      - jul
+      - ago
+      - set
+      - out
+      - nov
+      - dez
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d %b, %H:%M"
+      long: "%d de %B de %Y às %H:%M"
+
+  # Aplicativo geral
+  app:
+    name: "MedDir"
+    tagline: "Seu Hub de Registros Médicos"
+    description: "Organize e compartilhe seus documentos médicos com profissionais de saúde"
+    copyright: "Sua saúde, seus dados, seu controle."
+
+  # Seletor de idioma
+  locales:
+    en: "English"
+    pt-BR: "Português (BR)"
+    select_language: "Idioma"
+
+  # Ações e rótulos comuns
+  common:
+    actions:
+      edit: "Editar"
+      delete: "Excluir"
+      cancel: "Cancelar"
+      save: "Salvar"
+      create: "Criar"
+      update: "Atualizar"
+      download: "Baixar"
+      view: "Visualizar"
+      copy: "Copiar"
+      close: "Fechar"
+      back: "Voltar"
+      next: "Próximo"
+      sign_in: "Entrar"
+      sign_out: "Sair"
+      sign_up: "Cadastrar"
+      get_started: "Começar"
+      submit: "Enviar"
+      revoke: "Revogar"
+    labels:
+      email: "E-mail"
+      password: "Senha"
+      name: "Nome"
+      description: "Descrição"
+      notes: "Observações"
+      date: "Data"
+      file: "Arquivo"
+      optional: "opcional"
+    messages:
+      loading: "Carregando..."
+      no_date: "Sem data"
+      try_again_later: "Tente novamente mais tarde."
+    confirmations:
+      delete: "Tem certeza que deseja excluir?"
+
+  # Mensagens flash
+  flash:
+    sessions:
+      invalid_credentials: "E-mail ou senha incorretos."
+      rate_limit: "Tente novamente mais tarde."
+    registrations:
+      welcome: "Bem-vindo ao MedDir! Sua conta foi criada."
+      rate_limit: "Tente novamente mais tarde."
+    passwords:
+      reset_sent: "Instruções de redefinição de senha enviadas (se existir um usuário com esse e-mail)."
+      reset_success: "Senha redefinida com sucesso."
+      passwords_mismatch: "As senhas não coincidem."
+      invalid_token: "O link de redefinição de senha é inválido ou expirou."
+    medical_folders:
+      created: "Pasta criada com sucesso."
+      updated: "Pasta atualizada com sucesso."
+      deleted: "Pasta excluída com sucesso."
+    documents:
+      created: "Documento enviado com sucesso."
+      updated: "Documento atualizado com sucesso."
+      deleted: "Documento excluído com sucesso."
+    shareable_links:
+      created: "Link de compartilhamento criado com sucesso."
+      create_error: "Não foi possível criar o link de compartilhamento."
+      revoked: "Link de compartilhamento revogado."
+
+  # Modelos ActiveRecord
+  activerecord:
+    models:
+      user:
+        one: "Usuário"
+        other: "Usuários"
+      medical_folder:
+        one: "Pasta Médica"
+        other: "Pastas Médicas"
+      document:
+        one: "Documento"
+        other: "Documentos"
+      shareable_link:
+        one: "Link de Compartilhamento"
+        other: "Links de Compartilhamento"
+    attributes:
+      user:
+        name: "Nome"
+        email_address: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmar Senha"
+        locale: "Idioma"
+      medical_folder:
+        name: "Nome"
+        specialty: "Especialidade Médica"
+        description: "Descrição"
+      document:
+        title: "Título"
+        document_date: "Data do Documento"
+        notes: "Observações"
+        file: "Arquivo"
+      shareable_link:
+        expires_at: "Expira em"
+        token: "Token"
+    errors:
+      messages:
+        blank: "não pode ficar em branco"
+        too_short: "é muito curto (mínimo: %{count} caracteres)"
+        too_long: "é muito longo (máximo: %{count} caracteres)"
+        invalid: "é inválido"
+        taken: "já está em uso"
+        inclusion: "não está incluído na lista"
+
+  # Especialidades Médicas
+  specialties:
+    general: "Clínica Geral"
+    cardiology: "Cardiologia"
+    dermatology: "Dermatologia"
+    endocrinology: "Endocrinologia"
+    gastroenterology: "Gastroenterologia"
+    neurology: "Neurologia"
+    oncology: "Oncologia"
+    ophthalmology: "Oftalmologia"
+    orthopedics: "Ortopedia"
+    pediatrics: "Pediatria"
+    psychiatry: "Psiquiatria"
+    pulmonology: "Pneumologia"
+    radiology: "Radiologia"
+    urology: "Urologia"
+    gynecology: "Ginecologia"
+    other: "Outra"
+    select_specialty: "Selecione uma especialidade..."
+
+  # Opções de expiração
+  expiration:
+    one_day: "1 Dia"
+    seven_days: "7 Dias"
+    thirty_days: "30 Dias"
+    never: "Nunca"
+    never_expires: "Nunca expira"
+    expired_on: "Expirou em %{date}"
+    expires_on: "Expira em %{date}"

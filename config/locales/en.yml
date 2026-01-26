@@ -1,31 +1,162 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
+# English locale file for MedDir application
 en:
-  hello: "Hello world"
+  # Date and time formats
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M"
+      short: "%b %d, %H:%M"
+      long: "%B %d, %Y at %I:%M %p"
+
+  # Application-wide
+  app:
+    name: "MedDir"
+    tagline: "Your Medical Records Hub"
+    description: "Organize and share your medical documents with healthcare providers"
+    copyright: "Your health, your data, your control."
+
+  # Language selector
+  locales:
+    en: "English"
+    pt-BR: "Português (BR)"
+    select_language: "Language"
+
+  # Common actions and labels
+  common:
+    actions:
+      edit: "Edit"
+      delete: "Delete"
+      cancel: "Cancel"
+      save: "Save"
+      create: "Create"
+      update: "Update"
+      download: "Download"
+      view: "View"
+      copy: "Copy"
+      close: "Close"
+      back: "Back"
+      next: "Next"
+      sign_in: "Sign In"
+      sign_out: "Sign Out"
+      sign_up: "Sign Up"
+      get_started: "Get Started"
+      submit: "Submit"
+      revoke: "Revoke"
+    labels:
+      email: "Email"
+      password: "Password"
+      name: "Name"
+      description: "Description"
+      notes: "Notes"
+      date: "Date"
+      file: "File"
+      optional: "optional"
+    messages:
+      loading: "Loading..."
+      no_date: "No date"
+      try_again_later: "Try again later."
+    confirmations:
+      delete: "Are you sure you want to delete?"
+
+  # Flash messages
+  flash:
+    sessions:
+      invalid_credentials: "Try another email address or password."
+      rate_limit: "Try again later."
+    registrations:
+      welcome: "Welcome to MedDir! Your account has been created."
+      rate_limit: "Try again later."
+    passwords:
+      reset_sent: "Password reset instructions sent (if user with that email address exists)."
+      reset_success: "Password has been reset."
+      passwords_mismatch: "Passwords did not match."
+      invalid_token: "Password reset link is invalid or has expired."
+    medical_folders:
+      created: "Folder created successfully."
+      updated: "Folder updated successfully."
+      deleted: "Folder deleted successfully."
+    documents:
+      created: "Document uploaded successfully."
+      updated: "Document updated successfully."
+      deleted: "Document deleted successfully."
+    shareable_links:
+      created: "Share link created successfully."
+      create_error: "Could not create share link."
+      revoked: "Share link revoked."
+
+  # ActiveRecord models
+  activerecord:
+    models:
+      user:
+        one: "User"
+        other: "Users"
+      medical_folder:
+        one: "Medical Folder"
+        other: "Medical Folders"
+      document:
+        one: "Document"
+        other: "Documents"
+      shareable_link:
+        one: "Share Link"
+        other: "Share Links"
+    attributes:
+      user:
+        name: "Name"
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Confirm Password"
+        locale: "Language"
+      medical_folder:
+        name: "Name"
+        specialty: "Medical Specialty"
+        description: "Description"
+      document:
+        title: "Title"
+        document_date: "Document Date"
+        notes: "Notes"
+        file: "File"
+      shareable_link:
+        expires_at: "Expires at"
+        token: "Token"
+    errors:
+      messages:
+        blank: "can't be blank"
+        too_short: "is too short (minimum is %{count} characters)"
+        too_long: "is too long (maximum is %{count} characters)"
+        invalid: "is invalid"
+        taken: "has already been taken"
+        inclusion: "is not included in the list"
+
+  # Medical Specialties
+  specialties:
+    general: "General Practice"
+    cardiology: "Cardiology"
+    dermatology: "Dermatology"
+    endocrinology: "Endocrinology"
+    gastroenterology: "Gastroenterology"
+    neurology: "Neurology"
+    oncology: "Oncology"
+    ophthalmology: "Ophthalmology"
+    orthopedics: "Orthopedics"
+    pediatrics: "Pediatrics"
+    psychiatry: "Psychiatry"
+    pulmonology: "Pulmonology"
+    radiology: "Radiology"
+    urology: "Urology"
+    gynecology: "Gynecology"
+    other: "Other"
+    select_specialty: "Select a specialty..."
+
+  # Expiration options
+  expiration:
+    one_day: "1 Day"
+    seven_days: "7 Days"
+    thirty_days: "30 Days"
+    never: "Never"
+    never_expires: "Never expires"
+    expired_on: "Expired on %{date}"
+    expires_on: "Expires on %{date}"

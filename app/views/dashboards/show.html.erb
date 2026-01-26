@@ -14,7 +14,7 @@
         data-action="click->collapse#toggle" 
         class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group"
       >
-        <span class="text-sm font-medium uppercase tracking-wider">Stats Overview</span>
+        <span class="text-sm font-medium uppercase tracking-wider"><%= t('.stats_overview') %></span>
         <span data-collapse-target="icon" class="transition-transform duration-200">
           <%= render Ui::IconComponent.new(name: :chevron_up, size: :sm) %>
         </span>
@@ -23,21 +23,21 @@
       <div data-collapse-target="content" class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <%= render Ui::StatCardComponent.new(
           value: @medical_folders.count,
-          label: "Medical Folders",
+          label: t('.stat_folders'),
           icon: :folder,
           color: "emerald"
         ) %>
 
         <%= render Ui::StatCardComponent.new(
           value: @total_documents,
-          label: "Documents",
+          label: t('.stat_documents'),
           icon: :document,
           color: "cyan"
         ) %>
 
         <%= render Ui::StatCardComponent.new(
           value: @folders_by_specialty.keys.count,
-          label: "Specialties",
+          label: t('.stat_specialties'),
           icon: :archive,
           color: "violet"
         ) %>
@@ -49,9 +49,9 @@
       <!-- Folders Section -->
       <div class="flex-1">
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-white">Your Medical Folders</h2>
+          <h2 class="text-xl font-bold text-white"><%= t('.your_folders') %></h2>
           <%= render Ui::ButtonComponent.new(href: new_medical_folder_path, icon: :plus) do %>
-            New Folder
+            <%= t('.new_folder') %>
           <% end %>
         </div>
 
@@ -63,10 +63,10 @@
           </div>
         <% else %>
           <%= render Ui::EmptyStateComponent.new(
-            title: "No folders yet",
-            description: "Create your first medical folder to start organizing your documents.",
+            title: t('.no_folders_title'),
+            description: t('.no_folders_description'),
             icon: :folder,
-            action_text: "Create Your First Folder",
+            action_text: t('.create_first_folder'),
             action_href: new_medical_folder_path
           ) %>
         <% end %>
@@ -74,7 +74,7 @@
 
       <!-- Recent Activity Sidebar -->
       <div class="lg:w-80">
-        <h2 class="text-xl font-bold text-white mb-6">Recent Documents</h2>
+        <h2 class="text-xl font-bold text-white mb-6"><%= t('.recent_documents') %></h2>
         
         <% if @recent_documents.any? %>
           <div class="space-y-3">
@@ -99,7 +99,7 @@
         <% else %>
           <%= render Ui::CardComponent.new(variant: :subtle, classes: "p-6 text-center") do %>
             <%= render Ui::IconComponent.new(name: :document, size: :xxl, color: "slate-500", classes: "mx-auto mb-2") %>
-            <p class="text-sm text-slate-400">No documents uploaded yet</p>
+            <p class="text-sm text-slate-400"><%= t('.no_documents') %></p>
           <% end %>
         <% end %>
       </div>

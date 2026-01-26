@@ -14,14 +14,14 @@ module Features
       <div data-controller="fullscreen">
         <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
           <div class="px-6 py-4 border-b border-slate-700/50 flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-white">Preview</h2>
+            <h2 class="text-lg font-semibold text-white"><%= I18n.t('components.document_preview.preview') %></h2>
             <% if previewable? %>
               <button type="button"
                       data-action="click->fullscreen#open"
                       class="flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-all text-sm"
-                      title="Fullscreen">
+                      title="<%= I18n.t('components.document_preview.fullscreen') %>">
                 <%= render Ui::IconComponent.new(name: :expand, size: :sm) %>
-                Fullscreen
+                <%= I18n.t('components.document_preview.fullscreen') %>
               </button>
             <% end %>
           </div>
@@ -80,14 +80,14 @@ module Features
           tag.div(class: "w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4") do
             render Ui::IconComponent.new(name: :document, size: :xxl, color: "slate-500")
           end,
-          tag.p("Preview not available for this file type", class: "text-slate-400 mb-4"),
+          tag.p(I18n.t("components.document_preview.not_available"), class: "text-slate-400 mb-4"),
           helpers.link_to(
             helpers.rails_blob_path(@document.file, disposition: "attachment"),
             class: "inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 rounded-xl transition-all"
           ) do
             safe_join([
               render(Ui::IconComponent.new(name: :download, size: :sm)),
-              "Download to View"
+              I18n.t("components.document_preview.download_to_view")
             ])
           end
         ])
@@ -122,7 +122,7 @@ module Features
           ) do
             safe_join([
               render(Ui::IconComponent.new(name: :close, size: :md)),
-              "Close"
+              I18n.t("common.actions.close")
             ])
           end
         ])

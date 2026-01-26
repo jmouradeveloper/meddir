@@ -1,10 +1,10 @@
 <%= render "shared/authenticated_layout" do %>
-  <%= render Ui::BackLinkComponent.new(href: medical_folder_path(@medical_folder), text: "Back to #{@medical_folder.name}") %>
+  <%= render Ui::BackLinkComponent.new(href: medical_folder_path(@medical_folder), text: t('.back_to_folder', folder_name: @medical_folder.name)) %>
 
   <%= render Ui::ListPageHeaderComponent.new(
-    title: "Documents in #{@medical_folder.name}",
-    subtitle: "#{@documents.count} document#{@documents.count == 1 ? '' : 's'}",
-    action_text: "Upload Document",
+    title: t('.title', folder_name: @medical_folder.name),
+    subtitle: t('.document_count', count: @documents.count),
+    action_text: t('.upload_document'),
     action_href: new_medical_folder_document_path(@medical_folder)
   ) %>
 
@@ -16,10 +16,10 @@
     </div>
   <% else %>
     <%= render Ui::EmptyStateComponent.new(
-      title: "No documents yet",
-      description: "Upload your first document to this folder.",
+      title: t('.no_documents_title'),
+      description: t('.no_documents_description'),
       icon: :document,
-      action_text: "Upload First Document",
+      action_text: t('.upload_first'),
       action_href: new_medical_folder_document_path(@medical_folder)
     ) %>
   <% end %>

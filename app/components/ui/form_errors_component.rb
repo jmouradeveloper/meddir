@@ -14,7 +14,7 @@ module Ui
       <div class="bg-red-500/10 border border-red-500/50 rounded-xl p-4 mb-6">
         <div class="flex items-center gap-2 text-red-400 mb-2">
           <%= render Ui::IconComponent.new(name: :exclamation_circle, size: :md) %>
-          <span class="font-medium">Please fix the following errors:</span>
+          <span class="font-medium"><%= I18n.t('components.form_errors.title') %></span>
         </div>
         <ul class="list-disc list-inside text-red-300 text-sm space-y-1">
           <% @record.errors.full_messages.each do |message| %>

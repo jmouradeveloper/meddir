@@ -1,0 +1,73 @@
+# Arquivo de locale em Português Brasileiro para modelos ActiveRecord
+pt-BR:
+  activerecord:
+    models:
+      user:
+        one: "Usuário"
+        other: "Usuários"
+      session:
+        one: "Sessão"
+        other: "Sessões"
+      medical_folder:
+        one: "Pasta Médica"
+        other: "Pastas Médicas"
+      document:
+        one: "Documento"
+        other: "Documentos"
+      shareable_link:
+        one: "Link de Compartilhamento"
+        other: "Links de Compartilhamento"
+    attributes:
+      user:
+        name: "Nome"
+        email_address: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmação de senha"
+        password_digest: "Senha"
+        locale: "Preferência de idioma"
+      session:
+        user_agent: "Navegador"
+        ip_address: "Endereço IP"
+      medical_folder:
+        name: "Nome"
+        specialty: "Especialidade"
+        description: "Descrição"
+      document:
+        title: "Título"
+        document_date: "Data do documento"
+        notes: "Observações"
+        file: "Arquivo"
+      shareable_link:
+        token: "Token"
+        expires_at: "Data de expiração"
+        active: "Ativo"
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              blank: "não pode ficar em branco"
+              invalid: "não é um e-mail válido"
+              taken: "já está cadastrado"
+            password:
+              blank: "não pode ficar em branco"
+              too_short: "é muito curta (mínimo de %{count} caracteres)"
+            name:
+              too_long: "é muito longo (máximo de %{count} caracteres)"
+        medical_folder:
+          attributes:
+            name:
+              blank: "não pode ficar em branco"
+              too_short: "é muito curto (mínimo de %{count} caracteres)"
+              too_long: "é muito longo (máximo de %{count} caracteres)"
+            specialty:
+              blank: "não pode ficar em branco"
+              inclusion: "não é uma especialidade válida"
+        document:
+          attributes:
+            title:
+              blank: "não pode ficar em branco"
+              too_short: "é muito curto (mínimo de %{count} caracteres)"
+              too_long: "é muito longo (máximo de %{count} caracteres)"
+            file:
+              blank: "deve ser anexado"

@@ -13,8 +13,33 @@
         </div>
         
         <div class="flex items-center gap-4">
-          <%= link_to "Sign In", new_session_path, class: "text-slate-300 hover:text-white font-medium transition-colors" %>
-          <%= link_to "Get Started", new_registration_path, class: "px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/30 transform hover:scale-105 transition-all" %>
+          <%# Language Selector for Landing Page %>
+          <div class="relative" data-controller="dropdown">
+            <button type="button" 
+                    data-action="click->dropdown#toggle" 
+                    class="flex items-center gap-2 px-3 py-2 text-slate-300 hover:text-white transition-all">
+              <%= render Ui::IconComponent.new(name: :globe, size: :sm) %>
+              <span class="hidden sm:inline text-sm"><%= current_locale_name %></span>
+            </button>
+            <div data-dropdown-target="menu" 
+                 class="hidden absolute right-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50">
+              <div class="py-1">
+                <% available_locales.each do |locale| %>
+                  <%= button_to locale_path, 
+                      method: :patch,
+                      params: { locale: locale[:code] },
+                      class: "w-full flex items-center justify-between px-4 py-2 text-sm #{locale[:current] ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-300 hover:bg-slate-700/50'} transition-colors" do %>
+                    <span><%= locale[:name] %></span>
+                    <% if locale[:current] %>
+                      <%= render Ui::IconComponent.new(name: :check, size: :sm, color: "emerald-400") %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <%= link_to t('.nav.sign_in'), new_session_path, class: "text-slate-300 hover:text-white font-medium transition-colors" %>
+          <%= link_to t('.nav.get_started'), new_registration_path, class: "px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/30 transform hover:scale-105 transition-all" %>
         </div>
       </div>
     </div>
@@ -31,24 +56,23 @@
         <div class="relative">
           <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-8">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-emerald-400 text-sm font-medium">Your Health Records, Organized</span>
+            <span class="text-emerald-400 text-sm font-medium"><%= t('.hero.badge') %></span>
           </div>
           
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight">
-            All Your Medical
+            <%= t('.hero.title_line1') %>
             <span class="block bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-              Documents in One Place
+              <%= t('.hero.title_line2') %>
             </span>
           </h1>
           
           <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Store, organize, and share your medical records, lab results, and health documents 
-            with any doctor, anytime. Take control of your health journey.
+            <%= t('.hero.description') %>
           </p>
           
           <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <%= link_to new_registration_path, class: "group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-emerald-500/30 transform hover:scale-105 transition-all" do %>
-              Start Organizing Now
+              <%= t('.hero.cta_primary') %>
               <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -59,7 +83,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              See How It Works
+              <%= t('.hero.cta_secondary') %>
             </a>
           </div>
         </div>
@@ -72,10 +96,10 @@
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-          Everything You Need to Manage Your Health Records
+          <%= t('.features.title') %>
         </h2>
         <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-          Simple, secure, and designed for patients who want to take control of their medical history.
+          <%= t('.features.subtitle') %>
         </p>
       </div>
       
@@ -87,10 +111,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Organize by Specialty</h3>
+          <h3 class="text-xl font-bold text-white mb-3"><%= t('.features.organize.title') %></h3>
           <p class="text-slate-400 leading-relaxed">
-            Create folders for each medical specialty - cardiology, dermatology, general care, and more. 
-            Keep your records organized and easy to find.
+            <%= t('.features.organize.description') %>
           </p>
         </div>
         
@@ -101,10 +124,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Upload Any Document</h3>
+          <h3 class="text-xl font-bold text-white mb-3"><%= t('.features.upload.title') %></h3>
           <p class="text-slate-400 leading-relaxed">
-            Upload PDFs, images, lab results, prescriptions, and medical reports. 
-            All your health documents in one secure location.
+            <%= t('.features.upload.description') %>
           </p>
         </div>
         
@@ -115,10 +137,9 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Share Securely</h3>
+          <h3 class="text-xl font-bold text-white mb-3"><%= t('.features.share.title') %></h3>
           <p class="text-slate-400 leading-relaxed">
-            Generate secure, time-limited links to share folders with any doctor. 
-            No accounts needed for them - just instant access.
+            <%= t('.features.share.description') %>
           </p>
         </div>
       </div>
@@ -130,10 +151,10 @@
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-          Simple as 1, 2, 3
+          <%= t('.how_it_works.title') %>
         </h2>
         <p class="text-slate-400 text-lg">
-          Get started in minutes and never lose a medical document again.
+          <%= t('.how_it_works.subtitle') %>
         </p>
       </div>
       
@@ -143,9 +164,9 @@
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30">
             <span class="text-2xl font-bold text-white">1</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Create Folders</h3>
+          <h3 class="text-xl font-bold text-white mb-3"><%= t('.how_it_works.step1.title') %></h3>
           <p class="text-slate-400">
-            Set up folders for each medical specialty or health topic you want to track.
+            <%= t('.how_it_works.step1.description') %>
           </p>
         </div>
         
@@ -154,9 +175,9 @@
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30">
             <span class="text-2xl font-bold text-white">2</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Upload Documents</h3>
+          <h3 class="text-xl font-bold text-white mb-3"><%= t('.how_it_works.step2.title') %></h3>
           <p class="text-slate-400">
-            Add your lab results, prescriptions, medical reports, and other health records.
+            <%= t('.how_it_works.step2.description') %>
           </p>
         </div>
         
@@ -165,9 +186,9 @@
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30">
             <span class="text-2xl font-bold text-white">3</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Share with Doctors</h3>
+          <h3 class="text-xl font-bold text-white mb-3"><%= t('.how_it_works.step3.title') %></h3>
           <p class="text-slate-400">
-            Generate a secure link and share your medical history with any healthcare provider.
+            <%= t('.how_it_works.step3.description') %>
           </p>
         </div>
       </div>
@@ -181,13 +202,13 @@
         <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 rounded-3xl blur-xl"></div>
         <div class="relative">
           <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Ready to Take Control of Your Health Records?
+            <%= t('.cta.title') %>
           </h2>
           <p class="text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
-            Join thousands of patients who are already organizing their medical documents with MedDir.
+            <%= t('.cta.description') %>
           </p>
           <%= link_to new_registration_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-emerald-500/30 transform hover:scale-105 transition-all" do %>
-            Create Your Free Account
+            <%= t('.cta.button') %>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -210,10 +231,9 @@
           <span class="text-white font-semibold">MedDir</span>
         </div>
         <p class="text-slate-500 text-sm">
-          &copy; <%= Date.current.year %> MedDir. Your health, your data, your control.
+          &copy; <%= Date.current.year %> <%= t('.footer.copyright') %>
         </p>
       </div>
     </div>
   </footer>
 </div>
-

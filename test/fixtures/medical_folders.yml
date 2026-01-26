@@ -11,3 +11,10 @@ two:
   name: General Checkups
   specialty: general
   description: General practice documents
+
+# Alias for tests that reference by specialty name
+cardiology:
+  user: one
+  name: Heart Health
+  specialty: cardiology
+  description: Cardiology documents for testing

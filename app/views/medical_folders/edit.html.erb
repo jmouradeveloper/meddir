@@ -1,11 +1,11 @@
 <%= render "shared/authenticated_layout" do %>
   <%= render Ui::FormPageComponent.new(
-    title: "Edit Folder",
-    subtitle: "Update your folder details",
+    title: t('medical_folders.edit.title'),
+    subtitle: t('medical_folders.edit.subtitle'),
     icon: :edit,
     icon_color: "emerald",
     back_href: medical_folder_path(@medical_folder),
-    back_text: "Back to Folder"
+    back_text: t('medical_folders.edit.back_to_folder')
   ) do %>
     <%= render "form", medical_folder: @medical_folder %>
   <% end %>

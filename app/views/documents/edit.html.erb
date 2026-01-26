@@ -1,11 +1,11 @@
 <%= render "shared/authenticated_layout" do %>
   <%= render Ui::FormPageComponent.new(
-    title: "Edit Document",
+    title: t('documents.edit.title'),
     subtitle: @document.title,
     icon: :edit,
     icon_color: "amber",
     back_href: medical_folder_document_path(@medical_folder, @document),
-    back_text: "Back to Document"
+    back_text: t('documents.edit.back_to_document')
   ) do %>
     <%= render "form", document: @document %>
   <% end %>

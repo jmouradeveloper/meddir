@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Locale switching
+  resource :locale, only: :update
+
   # Authentication
   resource :session
   resource :registration, only: %i[new create]

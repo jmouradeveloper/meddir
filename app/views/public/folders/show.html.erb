@@ -13,7 +13,7 @@
         </div>
 
         <div class="flex items-center gap-2 text-sm">
-          <span class="text-slate-400">Shared by</span>
+          <span class="text-slate-400"><%= t('.shared_by') %></span>
           <span class="text-white font-medium"><%= @owner.display_name %></span>
         </div>
       </div>
@@ -28,7 +28,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
         </svg>
         <div>
-          <p class="text-emerald-300 font-medium">You're viewing a shared medical folder</p>
+          <p class="text-emerald-300 font-medium"><%= t('.viewing_shared') %></p>
           <p class="text-emerald-400/70 text-sm"><%= @shareable_link.formatted_expiration %></p>
         </div>
       </div>
@@ -44,7 +44,7 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-white"><%= @medical_folder.name %></h1>
-          <p class="text-slate-400"><%= @medical_folder.specialty_name %> &bull; <%= @documents.count %> document<%= @documents.count == 1 ? '' : 's' %></p>
+          <p class="text-slate-400"><%= t("specialties.#{@medical_folder.specialty}") %> &bull; <%= t('.document_count', count: @documents.count) %></p>
         </div>
       </div>
 
@@ -54,7 +54,7 @@
     </div>
 
     <!-- Documents List -->
-    <h2 class="text-xl font-bold text-white mb-6">Documents</h2>
+    <h2 class="text-xl font-bold text-white mb-6"><%= t('.documents_title') %></h2>
 
     <% if @documents.any? %>
       <div class="space-y-3">
@@ -96,7 +96,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
-                      View
+                      <%= t('.view') %>
                     <% end %>
                   <% end %>
 
@@ -104,7 +104,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    Download
+                    <%= t('.download') %>
                   <% end %>
                 </div>
               <% end %>
@@ -119,8 +119,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-white mb-2">No documents in this folder</h3>
-        <p class="text-slate-400">The folder owner hasn't uploaded any documents yet.</p>
+        <h3 class="text-lg font-semibold text-white mb-2"><%= t('.no_documents_title') %></h3>
+        <p class="text-slate-400"><%= t('.no_documents_description') %></p>
       </div>
     <% end %>
   </main>
@@ -129,9 +129,8 @@
   <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-slate-800 mt-12">
     <div class="max-w-5xl mx-auto text-center">
       <p class="text-slate-500 text-sm">
-        Shared via MedDir &bull; Secure medical document sharing
+        <%= t('.footer') %> &bull; <%= t('.footer_tagline') %>
       </p>
     </div>
   </footer>
 </div>
-

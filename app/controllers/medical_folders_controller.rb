@@ -29,7 +29,7 @@ class MedicalFoldersController < ApplicationController
 
     respond_to do |format|
       if @medical_folder.save
-        format.html { redirect_to @medical_folder, notice: "Folder created successfully." }
+        format.html { redirect_to @medical_folder, notice: t("flash.medical_folders.created") }
         format.json { render json: folder_json(@medical_folder), status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +44,7 @@ class MedicalFoldersController < ApplicationController
   def update
     respond_to do |format|
       if @medical_folder.update(medical_folder_params)
-        format.html { redirect_to @medical_folder, notice: "Folder updated successfully." }
+        format.html { redirect_to @medical_folder, notice: t("flash.medical_folders.updated") }
         format.json { render json: folder_json(@medical_folder) }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +57,7 @@ class MedicalFoldersController < ApplicationController
     @medical_folder.destroy
 
     respond_to do |format|
-      format.html { redirect_to dashboard_path, notice: "Folder deleted successfully.", status: :see_other }
+      format.html { redirect_to dashboard_path, notice: t("flash.medical_folders.deleted"), status: :see_other }
       format.json { head :no_content }
     end
   end

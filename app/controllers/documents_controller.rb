@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to medical_folder_path(@medical_folder), notice: "Document uploaded successfully." }
+        format.html { redirect_to medical_folder_path(@medical_folder), notice: t("flash.documents.created") }
         format.json { render json: document_json(@document), status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class DocumentsController < ApplicationController
     @document.destroy
 
     respond_to do |format|
-      format.html { redirect_to medical_folder_path(@medical_folder), notice: "Document deleted successfully.", status: :see_other }
+      format.html { redirect_to medical_folder_path(@medical_folder), notice: t("flash.documents.deleted"), status: :see_other }
       format.json { head :no_content }
     end
   end

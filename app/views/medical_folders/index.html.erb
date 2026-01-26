@@ -1,8 +1,8 @@
 <%= render "shared/authenticated_layout" do %>
   <%= render Ui::ListPageHeaderComponent.new(
-    title: "All Medical Folders",
-    subtitle: "View and manage all your medical folders",
-    action_text: "New Folder",
+    title: t('.title'),
+    subtitle: t('.subtitle'),
+    action_text: t('.new_folder'),
     action_href: new_medical_folder_path
   ) %>
 
@@ -14,10 +14,10 @@
     </div>
   <% else %>
     <%= render Ui::EmptyStateComponent.new(
-      title: "No folders yet",
-      description: "Create your first medical folder to start organizing your documents.",
+      title: t('.no_folders_title'),
+      description: t('.no_folders_description'),
       icon: :folder,
-      action_text: "Create Your First Folder",
+      action_text: t('.create_first_folder'),
       action_href: new_medical_folder_path
     ) %>
   <% end %>

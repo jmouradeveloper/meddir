@@ -1,11 +1,11 @@
 <%= render "shared/authenticated_layout" do %>
   <%= render Ui::FormPageComponent.new(
-    title: "Upload Document",
-    subtitle: "Add a new document to \"#{@medical_folder.name}\"",
+    title: t('documents.new.title'),
+    subtitle: t('documents.new.subtitle', folder_name: @medical_folder.name),
     icon: :upload,
     icon_color: "cyan",
     back_href: medical_folder_path(@medical_folder),
-    back_text: "Back to #{@medical_folder.name}"
+    back_text: t('documents.new.back_to_folder', folder_name: @medical_folder.name)
   ) do %>
     <%= render "form", document: @document %>
   <% end %>

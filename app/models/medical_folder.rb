@@ -33,7 +33,7 @@ class MedicalFolder < ApplicationRecord
   end
 
   def specialty_name
-    specialty_info[:name]
+    I18n.t("specialties.#{specialty}", default: specialty_info[:name])
   end
 
   def specialty_color

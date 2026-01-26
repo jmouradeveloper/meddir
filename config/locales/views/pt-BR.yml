@@ -1,0 +1,249 @@
+# Arquivo de locale em Português Brasileiro para as views
+pt-BR:
+  # Layouts
+  layouts:
+    application:
+      title: "MedDir - Seu Hub de Registros Médicos"
+
+  # Página inicial/Landing
+  home:
+    index:
+      nav:
+        sign_in: "Entrar"
+        get_started: "Começar"
+      hero:
+        badge: "Seus Registros de Saúde, Organizados"
+        title_line1: "Todos os Seus Documentos"
+        title_line2: "Médicos em Um Só Lugar"
+        description: "Armazene, organize e compartilhe seus registros médicos, resultados de exames e documentos de saúde com qualquer médico, a qualquer momento. Assuma o controle da sua jornada de saúde."
+        cta_primary: "Comece a Organizar Agora"
+        cta_secondary: "Veja Como Funciona"
+      features:
+        title: "Tudo o que Você Precisa para Gerenciar Seus Registros de Saúde"
+        subtitle: "Simples, seguro e projetado para pacientes que querem assumir o controle de seu histórico médico."
+        organize:
+          title: "Organize por Especialidade"
+          description: "Crie pastas para cada especialidade médica - cardiologia, dermatologia, clínica geral e muito mais. Mantenha seus registros organizados e fáceis de encontrar."
+        upload:
+          title: "Envie Qualquer Documento"
+          description: "Envie PDFs, imagens, resultados de exames, receitas e relatórios médicos. Todos os seus documentos de saúde em um local seguro."
+        share:
+          title: "Compartilhe com Segurança"
+          description: "Gere links seguros e com tempo limitado para compartilhar pastas com qualquer médico. Não é necessário criar conta - acesso instantâneo."
+      how_it_works:
+        title: "Simples como 1, 2, 3"
+        subtitle: "Comece em minutos e nunca mais perca um documento médico."
+        step1:
+          title: "Crie Pastas"
+          description: "Configure pastas para cada especialidade médica ou tema de saúde que você deseja acompanhar."
+        step2:
+          title: "Envie Documentos"
+          description: "Adicione seus resultados de exames, receitas, relatórios médicos e outros registros de saúde."
+        step3:
+          title: "Compartilhe com Médicos"
+          description: "Gere um link seguro e compartilhe seu histórico médico com qualquer profissional de saúde."
+      cta:
+        title: "Pronto para Assumir o Controle dos Seus Registros de Saúde?"
+        description: "Junte-se a milhares de pacientes que já estão organizando seus documentos médicos com o MedDir."
+        button: "Crie Sua Conta Gratuita"
+      footer:
+        copyright: "MedDir. Sua saúde, seus dados, seu controle."
+
+  # Sessões (Login)
+  sessions:
+    new:
+      title: "Bem-vindo de Volta"
+      subtitle: "Entre para acessar seus registros médicos"
+      email_label: "E-mail"
+      email_placeholder: "voce@exemplo.com"
+      password_label: "Senha"
+      password_placeholder: "Digite sua senha"
+      forgot_password: "Esqueceu a senha?"
+      submit: "Entrar"
+      no_account: "Não tem uma conta?"
+      create_account: "Criar uma"
+
+  # Cadastros
+  registrations:
+    new:
+      title: "Criar Conta"
+      subtitle: "Comece a organizar seus registros médicos"
+      name_label: "Nome"
+      name_placeholder: "Seu nome completo"
+      email_label: "E-mail"
+      email_placeholder: "voce@exemplo.com"
+      password_label: "Senha"
+      password_placeholder: "Mínimo 8 caracteres"
+      password_confirmation_label: "Confirmar Senha"
+      password_confirmation_placeholder: "Confirme sua senha"
+      submit: "Criar Conta"
+      has_account: "Já tem uma conta?"
+      sign_in: "Entrar"
+      errors_title: "Por favor, corrija os seguintes erros:"
+
+  # Senhas (Redefinição)
+  passwords:
+    new:
+      title: "Redefinir Senha"
+      subtitle: "Enviaremos instruções por e-mail"
+      email_label: "E-mail"
+      email_placeholder: "voce@exemplo.com"
+      submit: "Enviar Instruções"
+      remember_password: "Lembrou sua senha?"
+      sign_in: "Entrar"
+    edit:
+      title: "Definir Nova Senha"
+      subtitle: "Escolha uma senha forte para sua conta"
+      password_label: "Nova Senha"
+      password_placeholder: "Mínimo 8 caracteres"
+      password_confirmation_label: "Confirmar Senha"
+      password_confirmation_placeholder: "Confirme sua nova senha"
+      submit: "Atualizar Senha"
+
+  # Dashboard
+  dashboards:
+    show:
+      stats_overview: "Visão Geral"
+      stat_folders: "Pastas Médicas"
+      stat_documents: "Documentos"
+      stat_specialties: "Especialidades"
+      your_folders: "Suas Pastas Médicas"
+      new_folder: "Nova Pasta"
+      no_folders_title: "Nenhuma pasta ainda"
+      no_folders_description: "Crie sua primeira pasta médica para começar a organizar seus documentos."
+      create_first_folder: "Criar Sua Primeira Pasta"
+      recent_documents: "Documentos Recentes"
+      no_documents: "Nenhum documento enviado ainda"
+
+  # Pastas Médicas
+  medical_folders:
+    index:
+      title: "Todas as Pastas Médicas"
+      subtitle: "Visualize e gerencie todas as suas pastas médicas"
+      new_folder: "Nova Pasta"
+      no_folders_title: "Nenhuma pasta ainda"
+      no_folders_description: "Crie sua primeira pasta médica para começar a organizar seus documentos."
+      create_first_folder: "Criar Sua Primeira Pasta"
+    show:
+      back_to_dashboard: "Voltar ao Painel"
+      edit: "Editar"
+      delete: "Excluir"
+      delete_confirm: "Tem certeza que deseja excluir esta pasta e todos os seus documentos?"
+      documents_title: "Documentos"
+      upload_document: "Enviar Documento"
+      no_documents_title: "Nenhum documento ainda"
+      no_documents_description: "Envie seu primeiro documento para esta pasta."
+      upload_first: "Enviar Primeiro Documento"
+      share_title: "Compartilhar Esta Pasta"
+      share_description: "Gere um link seguro para compartilhar esta pasta com profissionais de saúde. Eles podem visualizar os documentos sem precisar criar uma conta."
+      link_expiration: "Validade do Link"
+      generate_link: "Gerar Link de Compartilhamento"
+      active_links: "Links Ativos"
+    new:
+      title: "Criar Nova Pasta"
+      subtitle: "Organize seus documentos médicos por especialidade"
+      back_to_dashboard: "Voltar ao Painel"
+    edit:
+      title: "Editar Pasta"
+      subtitle: "Atualize os detalhes da sua pasta"
+      back_to_folder: "Voltar à Pasta"
+    form:
+      name_placeholder: "ex., Exames Anuais, Resultados de Laboratório 2024"
+      specialty_label: "Especialidade Médica"
+      description_label: "Descrição (opcional)"
+      description_placeholder: "Adicione notas sobre esta pasta..."
+      create_button: "Criar Pasta"
+      update_button: "Atualizar Pasta"
+      cancel: "Cancelar"
+
+  # Documentos
+  documents:
+    index:
+      back_to_folder: "Voltar para %{folder_name}"
+      title: "Documentos em %{folder_name}"
+      upload_document: "Enviar Documento"
+      no_documents_title: "Nenhum documento ainda"
+      no_documents_description: "Envie seu primeiro documento para esta pasta."
+      upload_first: "Enviar Primeiro Documento"
+      document_count:
+        one: "%{count} documento"
+        other: "%{count} documentos"
+    show:
+      back_to_folder: "Voltar para %{folder_name}"
+      notes: "Observações"
+      download: "Baixar"
+      edit: "Editar"
+      delete: "Excluir"
+      delete_confirm: "Tem certeza que deseja excluir este documento?"
+    new:
+      title: "Enviar Documento"
+      subtitle: "Adicionar um novo documento a \"%{folder_name}\""
+      back_to_folder: "Voltar para %{folder_name}"
+    edit:
+      title: "Editar Documento"
+      back_to_document: "Voltar ao Documento"
+    form:
+      title_label: "Título"
+      title_placeholder: "ex., Resultado de Exame de Sangue, Relatório de Raio-X"
+      date_label: "Data do Documento"
+      file_label: "Arquivo"
+      file_formats: "Formatos aceitos: PDF, JPEG, PNG, GIF, WebP"
+      current_file: "Arquivo atual: %{filename} (%{size} MB)"
+      notes_label: "Observações (opcional)"
+      notes_placeholder: "Adicione observações sobre este documento..."
+      upload_button: "Enviar Documento"
+      update_button: "Atualizar Documento"
+      cancel: "Cancelar"
+
+  # Compartilhamento público de pasta
+  public:
+    folders:
+      show:
+        shared_by: "Compartilhado por"
+        viewing_shared: "Você está visualizando uma pasta médica compartilhada"
+        documents_title: "Documentos"
+        view: "Visualizar"
+        download: "Baixar"
+        no_documents_title: "Nenhum documento nesta pasta"
+        no_documents_description: "O proprietário da pasta ainda não enviou nenhum documento."
+        footer: "Compartilhado via MedDir"
+        footer_tagline: "Compartilhamento seguro de documentos médicos"
+        document_count:
+          one: "%{count} documento"
+          other: "%{count} documentos"
+      expired:
+        title: "Link Expirado"
+        description: "Este link de compartilhamento expirou. Entre em contato com a pessoa que compartilhou para solicitar um novo link."
+        go_to_meddir: "Ir para o MedDir"
+      not_found:
+        title: "Link Não Encontrado"
+        description: "Este link de compartilhamento não existe ou pode ter sido removido pelo proprietário."
+        go_to_meddir: "Ir para o MedDir"
+
+  # Partials compartilhadas
+  shared:
+    pwa_install_prompt:
+      title: "Instalar App MedDir"
+      description: "Instale no seu dispositivo para acesso rápido e suporte offline. Seus documentos médicos, sempre disponíveis."
+      install_button: "Instalar App"
+      maybe_later: "Talvez depois"
+      got_it: "Entendi"
+      ios_step1: "Toque no botão"
+      ios_share_button: "Compartilhar"
+      ios_step2: "Role e toque em"
+      ios_add_to_home: "Adicionar à Tela de Início"
+    offline_status:
+      offline_message: "Você está offline. As alterações serão sincronizadas quando você voltar a ficar online."
+      sync_now: "Sincronizar agora"
+
+  # Componentes
+  components:
+    header:
+      sign_out: "Sair"
+    form_errors:
+      title: "Por favor, corrija os seguintes erros:"
+    document_preview:
+      preview: "Visualização"
+      fullscreen: "Tela Cheia"
+      not_available: "Visualização não disponível para este tipo de arquivo"
+      download_to_view: "Baixar para Visualizar"
