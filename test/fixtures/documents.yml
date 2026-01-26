@@ -2,12 +2,12 @@
 
 one:
   medical_folder: one
-  title: MyString
+  title: ECG Report January
   document_date: 2026-01-05
-  notes: MyText
+  notes: Regular checkup ECG
 
 two:
   medical_folder: two
-  title: MyString
+  title: Blood Test Results
   document_date: 2026-01-05
-  notes: MyText
+  notes: Annual blood work

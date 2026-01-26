@@ -2,23 +2,34 @@
 <html class="h-full">
   <head>
     <title><%= content_for(:title) || "MedDir - Your Medical Records Hub" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MedDir">
     <meta name="application-name" content="MedDir">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#10b981">
+    <meta name="msapplication-TileColor" content="#0f172a">
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
     <meta name="description" content="Organize and share your medical documents with healthcare providers">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
+    <%# PWA Manifest %>
+    <link rel="manifest" href="/manifest.json">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icons/icon-96x96.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-192x192.png">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -56,5 +67,10 @@
     <% end %>
 
     <%= yield %>
+
+    <%# PWA offline status indicator - only for authenticated users %>
+    <% if defined?(current_user) && current_user %>
+      <%= render "shared/offline_status" %>
+    <% end %>
   </body>
 </html>

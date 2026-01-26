@@ -1,0 +1,47 @@
+<%# PWA Install Prompt - shows when install is available %>
+<div data-controller="pwa-install" class="hidden" data-pwa-install-target="container">
+  <div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-2xl p-4 backdrop-blur-sm">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0">
+        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+      </div>
+      
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-semibold text-white mb-1">
+          Install MedDir App
+        </h3>
+        <p class="text-xs text-slate-400 mb-3">
+          Install on your device for quick access and offline support. Your medical documents, always available.
+        </p>
+        
+        <div class="flex items-center gap-2">
+          <button data-action="pwa-install#install"
+                  data-pwa-install-target="button"
+                  class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-medium rounded-lg transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Install
+          </button>
+          
+          <button data-action="pwa-install#dismiss"
+                  class="text-xs text-slate-500 hover:text-slate-400 transition-colors">
+            Maybe later
+          </button>
+        </div>
+      </div>
+      
+      <button data-action="pwa-install#dismiss" class="flex-shrink-0 text-slate-500 hover:text-slate-400">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

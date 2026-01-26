@@ -2,6 +2,11 @@
   <%= render Features::HeaderComponent.new(user: current_user, show_logo_link: false) %>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <%# PWA Install Prompt %>
+    <div class="mb-6">
+      <%= render "shared/pwa_install_prompt" %>
+    </div>
+
     <!-- Stats Overview -->
     <div data-controller="collapse" data-collapse-open-value="true" class="mb-8">
       <button 

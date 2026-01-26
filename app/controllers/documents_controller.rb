@@ -4,9 +4,18 @@ class DocumentsController < ApplicationController
 
   def index
     @documents = @medical_folder.documents.recent.with_attached_file
+
+    respond_to do |format|
+      format.html
+      format.json { render json: documents_json(@documents) }
+    end
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: document_json(@document) }
+    end
   end
 
   def new
@@ -16,10 +25,14 @@ class DocumentsController < ApplicationController
   def create
     @document = @medical_folder.documents.build(document_params)
 
-    if @document.save
-      redirect_to medical_folder_path(@medical_folder), notice: "Document uploaded successfully."
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @document.save
+        format.html { redirect_to medical_folder_path(@medical_folder), notice: "Document uploaded successfully." }
+        format.json { render json: document_json(@document), status: :created }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { errors: @document.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -27,16 +40,24 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    if @document.update(document_params)
-      redirect_to medical_folder_document_path(@medical_folder, @document), notice: "Document updated successfully."
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @document.update(document_params)
+        format.html { redirect_to medical_folder_document_path(@medical_folder, @document), notice: "Document updated successfully." }
+        format.json { render json: document_json(@document) }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: { errors: @document.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @document.destroy
-    redirect_to medical_folder_path(@medical_folder), notice: "Document deleted successfully.", status: :see_other
+
+    respond_to do |format|
+      format.html { redirect_to medical_folder_path(@medical_folder), notice: "Document deleted successfully.", status: :see_other }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -50,7 +71,30 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:title, :document_date, :notes, :file)
+    params.require(:document).permit(:title, :document_date, :notes, :file, :offline_id)
+  end
+
+  def document_json(doc)
+    {
+      id: doc.id,
+      title: doc.title,
+      document_date: doc.document_date&.iso8601,
+      notes: doc.notes,
+      file_type: doc.file_type,
+      file_size_mb: doc.file_size_mb,
+      file_url: doc.file.attached? ? url_for(doc.file) : nil,
+      file_name: doc.file.attached? ? doc.file.filename.to_s : nil,
+      medical_folder_id: doc.medical_folder_id,
+      created_at: doc.created_at.iso8601,
+      updated_at: doc.updated_at.iso8601
+    }
+  end
+
+  def documents_json(documents)
+    {
+      documents: documents.map { |d| document_json(d) },
+      medical_folder_id: @medical_folder.id,
+      synced_at: Time.current.iso8601
+    }
   end
 end
-

@@ -2,12 +2,12 @@
 
 one:
   user: one
-  name: MyString
-  specialty: MyString
-  description: MyText
+  name: Cardiology Records
+  specialty: cardiology
+  description: All cardiology related documents
 
 two:
   user: two
-  name: MyString
-  specialty: MyString
-  description: MyText
+  name: General Checkups
+  specialty: general
+  description: General practice documents

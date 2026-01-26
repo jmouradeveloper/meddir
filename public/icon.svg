@@ -1,3 +1,31 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="crossGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0fdf4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGradient)"/>
+  
+  <!-- Folder shape -->
+  <path d="M100 160 L100 380 Q100 400 120 400 L392 400 Q412 400 412 380 L412 180 Q412 160 392 160 L280 160 L250 120 L140 120 Q120 120 120 140 L120 140 Q100 140 100 160 Z" 
+        fill="#0f172a" 
+        opacity="0.2"/>
+  <path d="M90 150 L90 370 Q90 390 110 390 L382 390 Q402 390 402 370 L402 170 Q402 150 382 150 L270 150 L240 110 L130 110 Q110 110 110 130 L110 130 Q90 130 90 150 Z" 
+        fill="#0f172a"/>
+  
+  <!-- Medical cross -->
+  <rect x="200" y="180" width="80" height="180" rx="10" fill="url(#crossGradient)"/>
+  <rect x="170" y="230" width="140" height="80" rx="10" fill="url(#crossGradient)"/>
+  
+  <!-- Document lines (subtle detail) -->
+  <rect x="320" y="200" width="50" height="6" rx="3" fill="#374151" opacity="0.5"/>
+  <rect x="320" y="220" width="40" height="6" rx="3" fill="#374151" opacity="0.5"/>
+  <rect x="320" y="240" width="45" height="6" rx="3" fill="#374151" opacity="0.5"/>
 </svg>
