@@ -2,12 +2,12 @@
 
 one:
   medical_folder: one
-  token: MyString
-  expires_at: 2026-01-05 12:15:02
-  active: false
+  token: <%= SecureRandom.urlsafe_base64(32) %>
+  expires_at: <%= 7.days.from_now %>
+  active: true
 
 two:
   medical_folder: two
-  token: MyString
-  expires_at: 2026-01-05 12:15:02
-  active: false
+  token: <%= SecureRandom.urlsafe_base64(32) %>
+  expires_at: <%= 7.days.from_now %>
+  active: true

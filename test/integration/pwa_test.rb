@@ -42,4 +42,59 @@ class PwaTest < ActionDispatch::IntegrationTest
     assert response.body.include?('name="theme-color"')
     assert response.body.include?('name="apple-mobile-web-app-capable"')
   end
+
+  test "dashboard includes PWA install prompt for authenticated users" do
+    sign_in_as users(:one)
+    get "/dashboard"
+    assert_response :success
+
+    # Verify the PWA install prompt partial is rendered
+    assert_select '[data-controller="pwa-install"]', 1
+    assert_select '[data-pwa-install-target="container"]', 1
+
+    # Verify configuration values are set
+    assert_select '[data-pwa-install-dismiss-days-value="7"]', 1
+    assert_select '[data-pwa-install-show-delay-value="1500"]', 1
+  end
+
+  test "PWA install prompt has Android install button" do
+    sign_in_as users(:one)
+    get "/dashboard"
+    assert_response :success
+
+    # Verify Android prompt elements exist
+    assert_select '[data-pwa-install-target="androidPrompt"]', 1
+    assert_select '[data-action="pwa-install#install"]', 1
+    assert_select '[data-pwa-install-target="button"]', 1
+  end
+
+  test "PWA install prompt has iOS instructions" do
+    sign_in_as users(:one)
+    get "/dashboard"
+    assert_response :success
+
+    # Verify iOS instructions elements exist (hidden by default)
+    assert_select '[data-pwa-install-target="iosInstructions"]', 1
+    # iOS instructions mention "Add to Home Screen"
+    assert response.body.include?("Add to Home Screen")
+  end
+
+  test "PWA install prompt has dismiss buttons" do
+    sign_in_as users(:one)
+    get "/dashboard"
+    assert_response :success
+
+    # Verify dismiss action buttons exist
+    assert_select '[data-action="pwa-install#dismiss"]', minimum: 2
+  end
+
+  test "PWA install prompt shows app install messaging" do
+    sign_in_as users(:one)
+    get "/dashboard"
+    assert_response :success
+
+    # Verify install messaging is present
+    assert response.body.include?("Install MedDir App")
+    assert response.body.include?("quick access and offline support")
+  end
 end

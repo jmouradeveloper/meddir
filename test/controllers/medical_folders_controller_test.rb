@@ -145,14 +145,10 @@ class MedicalFoldersControllerTest < ActionDispatch::IntegrationTest
   # ============ Authorization Tests ============
 
   test "should not access other user's folder" do
-    other_user = users(:two)
     other_folder = medical_folders(:two)
 
-    # Verify the folder belongs to the other user
-    assert_equal other_user.id, other_folder.user_id
-
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get medical_folder_url(other_folder)
-    end
+    # In integration tests, RecordNotFound is rescued and returns 404
+    get medical_folder_url(other_folder)
+    assert_response :not_found
   end
 end

@@ -5,6 +5,16 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
     @medical_folder = medical_folders(:one)
     @document = documents(:one)
+
+    # Attach a file to the document fixture if not already attached
+    unless @document.file.attached?
+      @document.file.attach(
+        io: File.open(Rails.root.join("test/fixtures/files/test_document.pdf")),
+        filename: "test_document.pdf",
+        content_type: "application/pdf"
+      )
+    end
+
     sign_in_as(@user)
   end
 
@@ -105,11 +115,10 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
   # ============ Authorization Tests ============
 
   test "should not access document in other user's folder" do
-    other_user = users(:two)
     other_folder = medical_folders(:two)
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get medical_folder_documents_url(other_folder)
-    end
+    # In integration tests, RecordNotFound is rescued and returns 404
+    get medical_folder_documents_url(other_folder)
+    assert_response :not_found
   end
 end
