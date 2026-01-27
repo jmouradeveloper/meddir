@@ -35,7 +35,7 @@ class ShareableLink < ApplicationRecord
   def remaining_accesses
     return nil if access_limit.nil?
 
-    [access_limit - access_count, 0].max
+    [ access_limit - access_count, 0 ].max
   end
 
   def formatted_expiration

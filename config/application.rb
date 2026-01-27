@@ -25,7 +25,7 @@ module Meddir
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Internationalization (i18n) configuration
-    config.i18n.available_locales = [:en, :"pt-BR"]
+    config.i18n.available_locales = [ :en, :"pt-BR" ]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.yml")]

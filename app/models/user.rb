@@ -42,7 +42,7 @@ class User < ApplicationRecord
   def storage_percentage
     return 0 if current_plan.unlimited_storage?
 
-    [(storage_used_mb / storage_limit_mb.to_f * 100).round(1), 100].min
+    [ (storage_used_mb / storage_limit_mb.to_f * 100).round(1), 100 ].min
   end
 
   # Limit checks
@@ -85,7 +85,7 @@ class User < ApplicationRecord
   def folders_percentage
     return 0 if current_plan.unlimited_folders?
 
-    [(folders_count.to_f / folders_limit * 100).round(1), 100].min
+    [ (folders_count.to_f / folders_limit * 100).round(1), 100 ].min
   end
 
   def link_access_limit

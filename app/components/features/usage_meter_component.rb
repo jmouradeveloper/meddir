@@ -53,7 +53,7 @@ module Features
 
         <% unless @compact %>
           <div class="pt-2 border-t border-slate-700">
-            <%= link_to I18n.t("components.usage_meter.view_plans"), helpers.subscriptions_path, 
+            <%= link_to I18n.t("components.usage_meter.view_plans"), helpers.subscriptions_path,
                 class: "text-sm text-emerald-400 hover:text-emerald-300 transition-colors" %>
           </div>
         <% end %>

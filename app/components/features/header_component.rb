@@ -24,18 +24,18 @@ module Features
             <div class="flex items-center gap-4">
               <%# Language Selector %>
               <div class="relative" data-controller="dropdown">
-                <button type="button" 
-                        data-action="click->dropdown#toggle" 
+                <button type="button"
+                        data-action="click->dropdown#toggle"
                         class="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all">
                   <%= render Ui::IconComponent.new(name: :globe, size: :sm) %>
                   <span class="hidden sm:inline text-sm"><%= helpers.current_locale_name %></span>
                   <%= render Ui::IconComponent.new(name: :chevron_down, size: :xs) %>
                 </button>
-                <div data-dropdown-target="menu" 
+                <div data-dropdown-target="menu"
                      class="hidden absolute right-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50">
                   <div class="py-1">
                     <% helpers.available_locales.each do |locale| %>
-                      <%= button_to helpers.locale_path, 
+                      <%= button_to helpers.locale_path,
                           method: :patch,
                           params: { locale: locale[:code] },
                           class: "w-full flex items-center justify-between px-4 py-2 text-sm \#{locale[:current] ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-300 hover:bg-slate-700/50'} transition-colors" do %>
