@@ -10,10 +10,18 @@ Rails.application.routes.draw do
   # Dashboard (authenticated home)
   resource :dashboard, only: :show, controller: "dashboards"
 
+  # Subscription management
+  resources :subscriptions, only: %i[index show]
+
   # Medical Folders
   resources :medical_folders do
     resources :documents
     resources :shareable_links, only: %i[create destroy]
+  end
+
+  # Admin namespace
+  namespace :admin do
+    resources :subscriptions, only: %i[index show edit update destroy]
   end
 
   # Public shared folder access (no auth required)

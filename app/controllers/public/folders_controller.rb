@@ -11,9 +11,16 @@ module Public
       end
 
       unless @shareable_link.valid_for_access?
-        render :expired, status: :gone
+        if @shareable_link.access_limit_reached?
+          render :access_limit_reached, status: :gone
+        else
+          render :expired, status: :gone
+        end
         return
       end
+
+      # Increment access count
+      @shareable_link.increment_access!
 
       @medical_folder = @shareable_link.medical_folder
       @documents = @medical_folder.documents.recent.with_attached_file

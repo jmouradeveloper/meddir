@@ -1,0 +1,158 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-white mb-4"><%= t("subscriptions.upgrade_title") %></h1>
+      <p class="text-slate-400 text-lg"><%= t("subscriptions.upgrade_description") %></p>
+    </div>
+
+    <!-- Current Usage -->
+    <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6 mb-8">
+      <h2 class="text-xl font-semibold text-white mb-4"><%= t("subscriptions.current_usage") %></h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Storage Usage -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-slate-300"><%= t("subscriptions.storage") %></span>
+            <span class="text-white font-medium">
+              <%= current_user.storage_used_mb %> MB
+              <% unless current_user.current_plan.unlimited_storage? %>
+                / <%= current_user.storage_limit_mb %> MB
+              <% else %>
+                (<%= t("subscriptions.unlimited") %>)
+              <% end %>
+            </span>
+          </div>
+          <% unless current_user.current_plan.unlimited_storage? %>
+            <div class="w-full bg-slate-700 rounded-full h-2">
+              <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full transition-all"
+                   style="width: <%= current_user.storage_percentage %>%"></div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Folders Usage -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-slate-300"><%= t("subscriptions.folders") %></span>
+            <span class="text-white font-medium">
+              <%= current_user.folders_count %>
+              <% unless current_user.current_plan.unlimited_folders? %>
+                / <%= current_user.folders_limit %>
+              <% else %>
+                (<%= t("subscriptions.unlimited") %>)
+              <% end %>
+            </span>
+          </div>
+          <% unless current_user.current_plan.unlimited_folders? %>
+            <div class="w-full bg-slate-700 rounded-full h-2">
+              <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full transition-all"
+                   style="width: <%= current_user.folders_percentage %>%"></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plans Grid -->
+    <div class="grid md:grid-cols-3 gap-6">
+      <% @plans.each do |plan| %>
+        <div class="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl border 
+             <%= plan == @current_plan ? "border-emerald-500 ring-2 ring-emerald-500/20" : "border-slate-700/50" %>
+             p-6 flex flex-col">
+          
+          <% if plan == @current_plan %>
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+              <span class="bg-emerald-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                <%= t("subscriptions.current_plan") %>
+              </span>
+            </div>
+          <% end %>
+
+          <div class="text-center mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2"><%= plan.name %></h3>
+            <div class="text-3xl font-bold text-white">
+              R$ <%= number_with_precision(plan.monthly_price, precision: 2) %>
+              <span class="text-sm font-normal text-slate-400">/<%= t("subscriptions.month") %></span>
+            </div>
+            <% if plan.annual_price.to_f > 0 %>
+              <p class="text-slate-400 text-sm mt-1">
+                <%= t("subscriptions.or") %> R$ <%= number_with_precision(plan.annual_price, precision: 2) %>/<%= t("subscriptions.year") %>
+              </p>
+            <% end %>
+          </div>
+
+          <ul class="space-y-3 flex-1 mb-6">
+            <li class="flex items-center gap-3 text-slate-300">
+              <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <% if plan.unlimited_storage? %>
+                <%= t("subscriptions.features.unlimited_storage") %>
+              <% else %>
+                <%= t("subscriptions.features.storage", amount: plan.storage_limit_mb) %> MB
+              <% end %>
+            </li>
+            <li class="flex items-center gap-3 text-slate-300">
+              <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <% if plan.unlimited_folders? %>
+                <%= t("subscriptions.features.unlimited_folders") %>
+              <% else %>
+                <%= t("subscriptions.features.folders", count: plan.folders_limit) %>
+              <% end %>
+            </li>
+            <li class="flex items-center gap-3 <%= plan.sharing_enabled ? "text-slate-300" : "text-slate-500" %>">
+              <% if plan.sharing_enabled %>
+                <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <% if plan.unlimited_links? %>
+                  <%= t("subscriptions.features.unlimited_links") %>
+                <% else %>
+                  <%= t("subscriptions.features.links", count: plan.active_links_limit) %>
+                <% end %>
+              <% else %>
+                <svg class="w-5 h-5 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <%= t("subscriptions.features.no_sharing") %>
+              <% end %>
+            </li>
+            <% if plan.sharing_enabled %>
+              <li class="flex items-center gap-3 text-slate-300">
+                <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <% if plan.unlimited_link_access? %>
+                  <%= t("subscriptions.features.unlimited_accesses") %>
+                <% else %>
+                  <%= t("subscriptions.features.accesses", count: plan.link_access_limit) %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+
+          <% if plan == @current_plan %>
+            <button disabled class="w-full py-3 bg-slate-700 text-slate-400 font-semibold rounded-xl cursor-not-allowed">
+              <%= t("subscriptions.current_plan") %>
+            </button>
+          <% elsif plan.free? %>
+            <span class="w-full py-3 text-center text-slate-500 font-medium">
+              <%= t("subscriptions.free_tier") %>
+            </span>
+          <% else %>
+            <button class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg transition-all">
+              <%= t("subscriptions.contact_to_upgrade") %>
+            </button>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <p class="text-center text-slate-400 mt-8">
+      <%= t("subscriptions.contact_info") %>
+    </p>
+  </div>
+</div>

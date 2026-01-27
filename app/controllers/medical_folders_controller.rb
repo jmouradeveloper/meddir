@@ -1,5 +1,8 @@
 class MedicalFoldersController < ApplicationController
+  include PlanLimits
+
   before_action :set_medical_folder, only: %i[show edit update destroy]
+  before_action :enforce_folder_limit!, only: %i[new create]
 
   def index
     @medical_folders = current_user.medical_folders.recent.includes(:documents)

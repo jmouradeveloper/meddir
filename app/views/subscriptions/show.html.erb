@@ -1,0 +1,58 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2"><%= t("subscriptions.my_subscription") %></h1>
+      <p class="text-slate-400"><%= t("subscriptions.manage_your_plan") %></p>
+    </div>
+
+    <!-- Current Plan Card -->
+    <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6 mb-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-white"><%= t("subscriptions.current_plan") %></h2>
+        <span class="px-3 py-1 rounded-full text-sm font-medium
+          <%= @plan.free? ? "bg-slate-600 text-slate-200" : "bg-emerald-500/20 text-emerald-400" %>">
+          <%= @plan.name %>
+        </span>
+      </div>
+
+      <% if @subscription.present? && !@plan.free? %>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <span class="text-slate-400"><%= t("subscriptions.billing_cycle") %>:</span>
+            <span class="text-white ml-2"><%= @subscription.billing_cycle.titleize %></span>
+          </div>
+          <div>
+            <span class="text-slate-400"><%= t("subscriptions.status") %>:</span>
+            <span class="<%= @subscription.active? ? "text-emerald-400" : "text-red-400" %> ml-2">
+              <%= @subscription.status.titleize %>
+            </span>
+          </div>
+          <% if @subscription.ends_at.present? %>
+            <div class="col-span-2">
+              <span class="text-slate-400"><%= t("subscriptions.expires") %>:</span>
+              <span class="text-white ml-2"><%= l(@subscription.ends_at, format: :long) %></span>
+              <% if @subscription.days_remaining && @subscription.days_remaining <= 7 %>
+                <span class="text-amber-400 text-xs ml-2">
+                  (<%= t("subscriptions.days_remaining", count: @subscription.days_remaining) %>)
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Usage -->
+    <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6 mb-6">
+      <h2 class="text-xl font-semibold text-white mb-4"><%= t("subscriptions.usage") %></h2>
+      <%= render Features::UsageMeterComponent.new(user: current_user, compact: false) %>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-center">
+      <%= link_to subscriptions_path, class: "px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl shadow-lg transition-all" do %>
+        <%= t("subscriptions.view_all_plans") %>
+      <% end %>
+    </div>
+  </div>
+</div>

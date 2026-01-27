@@ -1,5 +1,9 @@
 class ShareableLinksController < ApplicationController
+  include PlanLimits
+
   before_action :set_medical_folder
+  before_action :enforce_sharing_enabled!, only: :create
+  before_action :enforce_shareable_link_limit!, only: :create
 
   def create
     expires_in = params[:expires_in] || "7_days"

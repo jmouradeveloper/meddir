@@ -219,6 +219,10 @@ pt-BR:
         title: "Link Não Encontrado"
         description: "Este link de compartilhamento não existe ou pode ter sido removido pelo proprietário."
         go_to_meddir: "Ir para o MedDir"
+      access_limit_reached:
+        title: "Limite de Acessos Atingido"
+        description: "Este link de compartilhamento atingiu o número máximo de acessos. Entre em contato com a pessoa que compartilhou."
+        go_to_meddir: "Ir para o MedDir"
 
   # Partials compartilhadas
   shared:
@@ -247,3 +251,93 @@ pt-BR:
       fullscreen: "Tela Cheia"
       not_available: "Visualização não disponível para este tipo de arquivo"
       download_to_view: "Baixar para Visualizar"
+    usage_meter:
+      storage: "Armazenamento"
+      folders: "Pastas"
+      unlimited: "Ilimitado"
+      view_plans: "Ver Planos"
+
+  # Limites de plano
+  plan_limits:
+    folders_exceeded: "Você atingiu o limite de %{limit} pastas do seu plano. Faça upgrade para criar mais."
+    storage_exceeded: "Você atingiu o limite de armazenamento de %{limit} MB. Faça upgrade para enviar mais arquivos."
+    sharing_disabled: "O compartilhamento não está disponível no seu plano. Faça upgrade para compartilhar pastas."
+    links_exceeded: "Você atingiu o limite de %{limit} links ativos. Faça upgrade ou desative um link existente."
+
+  # Assinaturas
+  subscriptions:
+    upgrade_title: "Escolha Seu Plano"
+    upgrade_description: "Selecione o plano ideal para suas necessidades"
+    current_usage: "Seu Uso Atual"
+    storage: "Armazenamento"
+    folders: "Pastas"
+    unlimited: "Ilimitado"
+    current_plan: "Plano Atual"
+    month: "mês"
+    year: "ano"
+    or: "ou"
+    free_tier: "Plano Gratuito"
+    contact_to_upgrade: "Contatar para Upgrade"
+    contact_info: "Entre em contato conosco para ativar seu plano Premium ou Enterprise."
+    my_subscription: "Minha Assinatura"
+    manage_your_plan: "Gerencie seu plano e veja seu uso"
+    billing_cycle: "Ciclo de Cobrança"
+    status: "Status"
+    expires: "Expira em"
+    days_remaining:
+      one: "%{count} dia restante"
+      other: "%{count} dias restantes"
+    usage: "Uso"
+    view_all_plans: "Ver Todos os Planos"
+    features:
+      storage: "Armazenamento de %{amount}"
+      unlimited_storage: "Armazenamento ilimitado"
+      folders:
+        one: "%{count} pasta médica"
+        other: "%{count} pastas médicas"
+      unlimited_folders: "Pastas ilimitadas"
+      links:
+        one: "%{count} link ativo"
+        other: "%{count} links ativos"
+      unlimited_links: "Links ilimitados"
+      accesses:
+        one: "%{count} acesso por link"
+        other: "%{count} acessos por link"
+      unlimited_accesses: "Acessos ilimitados por link"
+      no_sharing: "Sem compartilhamento"
+
+  # Links compartilháveis
+  shareable_links:
+    unlimited_access: "Acessos ilimitados"
+    access_count_of_limit: "%{count} de %{limit} acessos"
+
+  # Admin
+  admin:
+    access_denied: "Acesso negado. Você precisa ser administrador."
+    subscriptions:
+      title: "Gerenciar Assinaturas"
+      description: "Gerencie os planos e assinaturas dos usuários"
+      user: "Usuário"
+      plan: "Plano"
+      status: "Status"
+      billing: "Cobrança"
+      expires: "Expira"
+      actions: "Ações"
+      edit: "Editar"
+      back_to_list: "Voltar à Lista"
+      edit_title: "Editar Assinatura"
+      select_plan: "Selecionar Plano"
+      no_subscription: "Sem Assinatura (Gratuito)"
+      free_plan_description: "O usuário terá acesso ao plano gratuito"
+      billing_cycle: "Ciclo de Cobrança"
+      expires_at: "Expira em"
+      notes: "Notas"
+      notes_placeholder: "Adicione notas sobre esta assinatura (pagamento, observações, etc.)"
+      updated: "Assinatura de %{user} atualizada com sucesso"
+      downgraded: "%{user} foi movido para o plano gratuito"
+      removed: "Assinatura de %{user} removida"
+
+  # Comum
+  common:
+    cancel: "Cancelar"
+    save: "Salvar"

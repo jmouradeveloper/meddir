@@ -1,0 +1,35 @@
+free:
+  name: "Gratuito"
+  slug: "free"
+  storage_limit_mb: 100
+  folders_limit: 3
+  sharing_enabled: false
+  active_links_limit: 0
+  link_access_limit: 0
+  monthly_price: 0
+  annual_price: 0
+  active: true
+
+premium:
+  name: "Premium"
+  slug: "premium"
+  storage_limit_mb: 5120
+  folders_limit: 20
+  sharing_enabled: true
+  active_links_limit: 10
+  link_access_limit: 100
+  monthly_price: 19.90
+  annual_price: 199.00
+  active: true
+
+enterprise:
+  name: "Enterprise"
+  slug: "enterprise"
+  storage_limit_mb:
+  folders_limit:
+  sharing_enabled: true
+  active_links_limit:
+  link_access_limit:
+  monthly_price: 49.90
+  annual_price: 499.00
+  active: true

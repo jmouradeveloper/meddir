@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_26_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_27_200712) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -59,6 +59,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_26_000001) do
     t.index ["user_id"], name: "index_medical_folders_on_user_id"
   end
 
+  create_table "plans", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.integer "active_links_limit"
+    t.decimal "annual_price", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.integer "folders_limit"
+    t.integer "link_access_limit"
+    t.decimal "monthly_price", precision: 10, scale: 2
+    t.string "name", null: false
+    t.boolean "sharing_enabled", default: false
+    t.string "slug", null: false
+    t.integer "storage_limit_mb"
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_plans_on_slug", unique: true
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -69,6 +85,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_26_000001) do
   end
 
   create_table "shareable_links", force: :cascade do |t|
+    t.integer "access_count", default: 0
+    t.integer "access_limit"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "expires_at"
@@ -79,7 +97,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_26_000001) do
     t.index ["token"], name: "index_shareable_links_on_token", unique: true
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "billing_cycle", default: "monthly"
+    t.datetime "created_at", null: false
+    t.datetime "ends_at"
+    t.text "notes"
+    t.integer "plan_id", null: false
+    t.datetime "starts_at"
+    t.string "status", default: "active"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
+    t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.string "email_address", null: false
     t.string "locale"
@@ -95,4 +128,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_26_000001) do
   add_foreign_key "medical_folders", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "shareable_links", "medical_folders"
+  add_foreign_key "subscriptions", "plans"
+  add_foreign_key "subscriptions", "users"
 end

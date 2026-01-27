@@ -1,0 +1,7 @@
+premium_subscription:
+  user: one
+  plan: premium
+  billing_cycle: "monthly"
+  status: "active"
+  starts_at: <%= 1.month.ago %>
+  ends_at: <%= 1.month.from_now %>

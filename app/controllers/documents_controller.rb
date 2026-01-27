@@ -1,4 +1,6 @@
 class DocumentsController < ApplicationController
+  include PlanLimits
+
   before_action :set_medical_folder
   before_action :set_document, only: %i[show edit update destroy]
 
@@ -23,6 +25,22 @@ class DocumentsController < ApplicationController
   end
 
   def create
+    # Check storage limit before creating
+    if document_params[:file].present? && storage_limit_exceeded?(document_params[:file])
+      respond_to do |format|
+        format.html do
+          @document = @medical_folder.documents.build(document_params)
+          flash.now[:alert] = t("plan_limits.storage_exceeded", limit: current_user.storage_limit_mb)
+          render :new, status: :unprocessable_entity
+        end
+        format.json do
+          render json: { error: t("plan_limits.storage_exceeded", limit: current_user.storage_limit_mb) },
+            status: :forbidden
+        end
+      end
+      return
+    end
+
     @document = @medical_folder.documents.build(document_params)
 
     respond_to do |format|
@@ -40,6 +58,21 @@ class DocumentsController < ApplicationController
   end
 
   def update
+    # Check storage limit if file is being replaced
+    if document_params[:file].present? && storage_limit_exceeded?(document_params[:file])
+      respond_to do |format|
+        format.html do
+          flash.now[:alert] = t("plan_limits.storage_exceeded", limit: current_user.storage_limit_mb)
+          render :edit, status: :unprocessable_entity
+        end
+        format.json do
+          render json: { error: t("plan_limits.storage_exceeded", limit: current_user.storage_limit_mb) },
+            status: :forbidden
+        end
+      end
+      return
+    end
+
     respond_to do |format|
       if @document.update(document_params)
         format.html { redirect_to medical_folder_document_path(@medical_folder, @document), notice: "Document updated successfully." }

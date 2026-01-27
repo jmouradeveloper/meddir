@@ -20,8 +20,22 @@ class ShareableLink < ApplicationRecord
     expires_at.present? && expires_at <= Time.current
   end
 
+  def access_limit_reached?
+    access_limit.present? && access_count >= access_limit
+  end
+
   def valid_for_access?
-    active? && !expired?
+    active? && !expired? && !access_limit_reached?
+  end
+
+  def increment_access!
+    increment!(:access_count)
+  end
+
+  def remaining_accesses
+    return nil if access_limit.nil?
+
+    [access_limit - access_count, 0].max
   end
 
   def formatted_expiration
@@ -32,6 +46,12 @@ class ShareableLink < ApplicationRecord
     else
       I18n.t("expiration.expires_on", date: I18n.l(expires_at, format: :long))
     end
+  end
+
+  def formatted_access_limit
+    return I18n.t("shareable_links.unlimited_access") if access_limit.nil?
+
+    I18n.t("shareable_links.access_count_of_limit", count: access_count, limit: access_limit)
   end
 
   def days_until_expiration
@@ -52,5 +72,10 @@ class ShareableLink < ApplicationRecord
 
   def set_defaults
     self.active = true if active.nil?
+    self.access_count ||= 0
+    # Set access_limit based on user plan if not already set
+    if access_limit.nil? && medical_folder.present?
+      self.access_limit = user.link_access_limit
+    end
   end
 end

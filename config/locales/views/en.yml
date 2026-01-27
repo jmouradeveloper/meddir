@@ -60,7 +60,7 @@ en:
       password_placeholder: "Enter your password"
       forgot_password: "Forgot password?"
       submit: "Sign In"
-      no_account: "Don't have an account?"
+      no_account: "Do not have an account?"
       create_account: "Create one"
 
   # Registrations (Sign up)
@@ -85,7 +85,7 @@ en:
   passwords:
     new:
       title: "Reset Password"
-      subtitle: "We'll send you instructions via email"
+      subtitle: "We will send you instructions via email"
       email_label: "Email"
       email_placeholder: "you@example.com"
       submit: "Send Reset Instructions"
@@ -177,7 +177,7 @@ en:
       delete_confirm: "Are you sure you want to delete this document?"
     new:
       title: "Upload Document"
-      subtitle: "Add a new document to \"%{folder_name}\""
+      subtitle: "Add a new document to %{folder_name}"
       back_to_folder: "Back to %{folder_name}"
     edit:
       title: "Edit Document"
@@ -200,12 +200,12 @@ en:
     folders:
       show:
         shared_by: "Shared by"
-        viewing_shared: "You're viewing a shared medical folder"
+        viewing_shared: "You are viewing a shared medical folder"
         documents_title: "Documents"
         view: "View"
         download: "Download"
         no_documents_title: "No documents in this folder"
-        no_documents_description: "The folder owner hasn't uploaded any documents yet."
+        no_documents_description: "The folder owner has not uploaded any documents yet."
         footer: "Shared via MedDir"
         footer_tagline: "Secure medical document sharing"
         document_count:
@@ -217,7 +217,11 @@ en:
         go_to_meddir: "Go to MedDir"
       not_found:
         title: "Link Not Found"
-        description: "This share link doesn't exist or may have been removed by the owner."
+        description: "This share link does not exist or may have been removed by the owner."
+        go_to_meddir: "Go to MedDir"
+      access_limit_reached:
+        title: "Access Limit Reached"
+        description: "This share link has reached its maximum number of accesses. Please contact the person who shared it with you."
         go_to_meddir: "Go to MedDir"
 
   # Shared partials
@@ -233,7 +237,7 @@ en:
       ios_step2: "Scroll and tap"
       ios_add_to_home: "Add to Home Screen"
     offline_status:
-      offline_message: "You're offline. Changes will sync when you're back online."
+      offline_message: "You are offline. Changes will sync when you are back online."
       sync_now: "Sync now"
 
   # Components
@@ -247,3 +251,93 @@ en:
       fullscreen: "Fullscreen"
       not_available: "Preview not available for this file type"
       download_to_view: "Download to View"
+    usage_meter:
+      storage: "Storage"
+      folders: "Folders"
+      unlimited: "Unlimited"
+      view_plans: "View Plans"
+
+  # Plan limits
+  plan_limits:
+    folders_exceeded: "You have reached the limit of %{limit} folders on your plan. Upgrade to create more."
+    storage_exceeded: "You have reached the storage limit of %{limit} MB. Upgrade to upload more files."
+    sharing_disabled: "Sharing is not available on your plan. Upgrade to share folders."
+    links_exceeded: "You have reached the limit of %{limit} active links. Upgrade or deactivate an existing link."
+
+  # Subscriptions
+  subscriptions:
+    upgrade_title: "Choose Your Plan"
+    upgrade_description: "Select the perfect plan for your needs"
+    current_usage: "Your Current Usage"
+    storage: "Storage"
+    folders: "Folders"
+    unlimited: "Unlimited"
+    current_plan: "Current Plan"
+    month: "month"
+    year: "year"
+    or: "or"
+    free_tier: "Free Plan"
+    contact_to_upgrade: "Contact to Upgrade"
+    contact_info: "Contact us to activate your Premium or Enterprise plan."
+    my_subscription: "My Subscription"
+    manage_your_plan: "Manage your plan and view your usage"
+    billing_cycle: "Billing Cycle"
+    status: "Status"
+    expires: "Expires"
+    days_remaining:
+      one: "%{count} day remaining"
+      other: "%{count} days remaining"
+    usage: "Usage"
+    view_all_plans: "View All Plans"
+    features:
+      storage: "%{amount} Storage"
+      unlimited_storage: "Unlimited storage"
+      folders:
+        one: "%{count} medical folder"
+        other: "%{count} medical folders"
+      unlimited_folders: "Unlimited folders"
+      links:
+        one: "%{count} active link"
+        other: "%{count} active links"
+      unlimited_links: "Unlimited links"
+      accesses:
+        one: "%{count} access per link"
+        other: "%{count} accesses per link"
+      unlimited_accesses: "Unlimited accesses per link"
+      no_sharing: "No sharing"
+
+  # Shareable links
+  shareable_links:
+    unlimited_access: "Unlimited accesses"
+    access_count_of_limit: "%{count} of %{limit} accesses"
+
+  # Admin
+  admin:
+    access_denied: "Access denied. You need to be an administrator."
+    subscriptions:
+      title: "Manage Subscriptions"
+      description: "Manage user plans and subscriptions"
+      user: "User"
+      plan: "Plan"
+      status: "Status"
+      billing: "Billing"
+      expires: "Expires"
+      actions: "Actions"
+      edit: "Edit"
+      back_to_list: "Back to List"
+      edit_title: "Edit Subscription"
+      select_plan: "Select Plan"
+      no_subscription: "No Subscription - Free"
+      free_plan_description: "User will have access to the free plan"
+      billing_cycle: "Billing Cycle"
+      expires_at: "Expires at"
+      notes: "Notes"
+      notes_placeholder: "Add notes about this subscription - payment, observations, etc."
+      updated: "Subscription for %{user} updated successfully"
+      downgraded: "%{user} was moved to the free plan"
+      removed: "Subscription for %{user} removed"
+
+  # Common
+  common:
+    cancel: "Cancel"
+    save: "Save"
