@@ -5,13 +5,11 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: sqlite3
-  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  adapter: postgresql
 
 development:
   <<: *default
-  database: storage/development.sqlite3
+  url: <%= ENV['DATABASE_URL'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

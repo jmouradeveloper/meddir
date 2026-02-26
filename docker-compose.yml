@@ -13,10 +13,22 @@ services:
     environment:
       - RAILS_ENV=development
       - BINDING=0.0.0.0
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/meddir_development
     stdin_open: true
     tty: true
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=meddir_development
+    ports:
+      - "5433:5432"
+    volumes:
+      - meddir_db:/var/lib/postgresql/data
 
 volumes:
   bundle_cache:
   node_modules:
-
+  meddir_db:

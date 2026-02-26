@@ -11,7 +11,17 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_01_27_200712) do
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_schema "extensions"
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "extensions.pg_stat_statements"
+  enable_extension "extensions.pgcrypto"
+  enable_extension "extensions.uuid-ossp"
+  # enable_extension "graphql.pg_graphql" # Supabase Vault extension is not compatible with this extension
+  enable_extension "pg_catalog.plpgsql"
+  # enable_extension "vault.supabase_vault" # Supabase Vault extension is not compatible with this extension
+
+  create_table "public.active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -21,7 +31,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_200712) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "public.active_storage_blobs", force: :cascade do |t|
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.string "content_type"
@@ -33,33 +43,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_200712) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
+  create_table "public.active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "documents", force: :cascade do |t|
+  create_table "public.documents", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "document_date"
-    t.integer "medical_folder_id", null: false
+    t.bigint "medical_folder_id", null: false
     t.text "notes"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["medical_folder_id"], name: "index_documents_on_medical_folder_id"
   end
 
-  create_table "medical_folders", force: :cascade do |t|
+  create_table "public.medical_folders", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.string "name"
     t.string "specialty"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_medical_folders_on_user_id"
   end
 
-  create_table "plans", force: :cascade do |t|
+  create_table "public.plans", force: :cascade do |t|
     t.boolean "active", default: true
     t.integer "active_links_limit"
     t.decimal "annual_price", precision: 10, scale: 2
@@ -75,43 +85,43 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_200712) do
     t.index ["slug"], name: "index_plans_on_slug", unique: true
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "public.sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
     t.datetime "updated_at", null: false
     t.string "user_agent"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "shareable_links", force: :cascade do |t|
+  create_table "public.shareable_links", force: :cascade do |t|
     t.integer "access_count", default: 0
     t.integer "access_limit"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "expires_at"
-    t.integer "medical_folder_id", null: false
+    t.bigint "medical_folder_id", null: false
     t.string "token"
     t.datetime "updated_at", null: false
     t.index ["medical_folder_id"], name: "index_shareable_links_on_medical_folder_id"
     t.index ["token"], name: "index_shareable_links_on_token", unique: true
   end
 
-  create_table "subscriptions", force: :cascade do |t|
+  create_table "public.subscriptions", force: :cascade do |t|
     t.string "billing_cycle", default: "monthly"
     t.datetime "created_at", null: false
     t.datetime "ends_at"
     t.text "notes"
-    t.integer "plan_id", null: false
+    t.bigint "plan_id", null: false
     t.datetime "starts_at"
     t.string "status", default: "active"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "public.users", force: :cascade do |t|
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.string "email_address", null: false
@@ -122,12 +132,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_200712) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "documents", "medical_folders"
-  add_foreign_key "medical_folders", "users"
-  add_foreign_key "sessions", "users"
-  add_foreign_key "shareable_links", "medical_folders"
-  add_foreign_key "subscriptions", "plans"
-  add_foreign_key "subscriptions", "users"
+  add_foreign_key "public.active_storage_attachments", "public.active_storage_blobs", column: "blob_id"
+  add_foreign_key "public.active_storage_variant_records", "public.active_storage_blobs", column: "blob_id"
+  add_foreign_key "public.documents", "public.medical_folders"
+  add_foreign_key "public.medical_folders", "public.users"
+  add_foreign_key "public.sessions", "public.users"
+  add_foreign_key "public.shareable_links", "public.medical_folders"
+  add_foreign_key "public.subscriptions", "public.plans"
+  add_foreign_key "public.subscriptions", "public.users"
+
 end
