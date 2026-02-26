@@ -47,6 +47,8 @@ class User < ApplicationRecord
 
   # Limit checks
   def can_create_folder?
+    return false unless subscribed?
+
     current_plan.unlimited_folders? || medical_folders.count < current_plan.folders_limit
   end
 
