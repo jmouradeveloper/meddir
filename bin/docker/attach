@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Attach to the web container for interactive debugging (e.g. pry)
+# Use Ctrl+P, Ctrl+Q to detach without stopping the container
+set -e
+
+cd "$(dirname "$0")/../.."
+
+echo "Attaching to web container... (detach with Ctrl+P then Ctrl+Q)"
+docker attach meddir-web-1
