@@ -21,6 +21,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo "==> Waiting for container to be ready..."
   sleep 3
 
+  echo "==> Installing gems..."
+  docker compose exec web bundle install --gemfile /app/Gemfile
+
   echo "==> Setting up database..."
   docker compose exec web bin/rails db:prepare
 
