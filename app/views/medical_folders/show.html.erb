@@ -1,5 +1,5 @@
 <%= render "shared/authenticated_layout" do %>
-  <%= render Ui::BackLinkComponent.new(href: dashboard_path, text: t('.back_to_dashboard')) %>
+  <%= render Ui::BackLinkComponent.new(href: dashboard_path, text: t('medical_folders.show.back_to_dashboard')) %>
 
   <!-- Folder Header -->
   <%= render Ui::CardComponent.new(classes: "mb-6") do %>
@@ -20,17 +20,17 @@
           variant: :secondary,
           icon: :edit
         ) do %>
-          <%= t('.edit') %>
+          <%= t('medical_folders.show.edit') %>
         <% end %>
 
         <%= render Ui::ButtonComponent.new(
           href: medical_folder_path(@medical_folder),
           variant: :danger,
           method: :delete,
-          turbo_confirm: t('.delete_confirm'),
+          turbo_confirm: t('medical_folders.show.delete_confirm'),
           icon: :trash
         ) do %>
-          <%= t('.delete') %>
+          <%= t('medical_folders.show.delete') %>
         <% end %>
       </div>
     </div>
@@ -46,12 +46,12 @@
     <!-- Documents Section -->
     <div class="lg:col-span-2">
       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-bold text-white"><%= t('.documents_title') %> (<%= @documents.count %>)</h2>
+        <h2 class="text-xl font-bold text-white"><%= t('medical_folders.show.documents_title') %> (<%= @documents.count %>)</h2>
         <%= render Ui::ButtonComponent.new(
           href: new_medical_folder_document_path(@medical_folder),
           icon: :plus
         ) do %>
-          <%= t('.upload_document') %>
+          <%= t('medical_folders.show.upload_document') %>
         <% end %>
       </div>
 
@@ -63,10 +63,10 @@
         </div>
       <% else %>
         <%= render Ui::EmptyStateComponent.new(
-          title: t('.no_documents_title'),
-          description: t('.no_documents_description'),
+          title: t('medical_folders.show.no_documents_title'),
+          description: t('medical_folders.show.no_documents_description'),
           icon: :document,
-          action_text: t('.upload_first'),
+          action_text: t('medical_folders.show.upload_first'),
           action_href: new_medical_folder_document_path(@medical_folder)
         ) %>
       <% end %>
@@ -74,16 +74,16 @@
 
     <!-- Sharing Section -->
     <div>
-      <h2 class="text-xl font-bold text-white mb-6"><%= t('.share_title') %></h2>
+      <h2 class="text-xl font-bold text-white mb-6"><%= t('medical_folders.show.share_title') %></h2>
       
       <%= render Ui::CardComponent.new do %>
         <p class="text-slate-400 text-sm mb-4">
-          <%= t('.share_description') %>
+          <%= t('medical_folders.show.share_description') %>
         </p>
 
         <%= form_with url: medical_folder_shareable_links_path(@medical_folder), class: "mb-6" do |form| %>
           <div class="mb-4">
-            <%= form.label :expires_in, t('.link_expiration'), class: "block text-sm font-medium text-slate-300 mb-2" %>
+            <%= form.label :expires_in, t('medical_folders.show.link_expiration'), class: "block text-sm font-medium text-slate-300 mb-2" %>
             <%= form.select :expires_in,
                 [[t('expiration.one_day'), "1_day"], [t('expiration.seven_days'), "7_days"], [t('expiration.thirty_days'), "30_days"], [t('expiration.never'), "never"]],
                 {},
