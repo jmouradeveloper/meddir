@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: bin/rails server -b 0.0.0.0
+    command: bin/dev
     volumes:
       - .:/app
       - bundle_cache:/usr/local/bundle

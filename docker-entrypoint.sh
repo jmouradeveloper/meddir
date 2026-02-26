@@ -7,6 +7,9 @@ if [ -f Gemfile ]; then
   bundle install
 fi
 
+# Remove stale Rails server pid so the server can start (volume persists across restarts)
+rm -f tmp/pids/server.pid
+
 # Execute the main command
 exec "$@"
 

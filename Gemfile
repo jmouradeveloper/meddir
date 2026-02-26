@@ -62,6 +62,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  # Process manager to run server and asset watchers (Procfile.dev)
+  gem "foreman"
 end
 
 group :test do
