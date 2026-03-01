@@ -69,5 +69,5 @@ end
 
 group :test do
   # Pin minitest to compatible version (6.0.0+ has breaking changes with Rails 8.1)
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 6.0"
 end
